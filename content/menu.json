@@ -1,0 +1,205 @@
+{
+  "_comment": "Official Yiasemi menu, transcribed from yiasemi.gr/menu. Prices in EUR. diet: 'vegetarian' | 'vegan' | null (null = no label shown). 'verify' notes are for the client and are never shown on the site.",
+  "currency": "EUR",
+  "notes": {
+    "homemade": { "en": "All our products are homemade.", "el": "Όλα τα είδη μας είναι σπιτικά." },
+    "allergies": { "en": "If you have any allergies or intolerances to any food or ingredient, please ask us.", "el": "Σε περίπτωση αλλεργίας ή δυσανεξίας σε κάποιο τρόφιμο ή συστατικό παρακαλούμε ρωτήστε μας." },
+    "oil": { "en": "Our salads and all our preparations are made using pure virgin olive oil.", "el": "Στις σαλάτες και σε όλες μας τις παρασκευές χρησιμοποιείται αγνό παρθένο ελαιόλαδο." },
+    "beef": { "en": "The minced meat we use is beef.", "el": "Ο κιμάς που χρησιμοποιούμε είναι μοσχαρίσιος." },
+    "dishesOfDay": { "en": "Ask us about today's dishes.", "el": "Ρωτήστε μας για τα πιάτα ημέρας." },
+    "receipt": { "en": "The consumer is not obliged to pay if they do not receive a legal receipt or invoice.", "el": "Ο καταναλωτής δεν έχει υποχρέωση να πληρώσει εάν δεν λάβει το νόμιμο παραστατικό στοιχείο (απόδειξη - τιμολόγιο)." },
+    "alcohol": { "en": "Consumption of alcohol is prohibited for persons under 18 years of age.", "el": "Απαγορεύεται η κατανάλωση αλκοόλ από άτομα κάτω των 18 ετών." },
+    "complaints": { "en": "A complaint box is available in a visible location at the exit.", "el": "Στην έξοδο βρίσκεται σε εμφανές σημείο κουτί με δελτία παραπόνων." }
+  },
+  "sections": [
+    {
+      "id": "breakfast", "group": "food",
+      "name": { "en": "Breakfast", "el": "Πρωινό" },
+      "served": { "en": "Served 9:00–13:00", "el": "Σερβίρεται 9:00–13:00" },
+      "items": [
+        { "id": "bread-butter-jam", "name": { "en": "Homemade kneaded bread, butter & homemade jam", "el": "Ψωμί ζυμωτό, βούτυρο & σπιτική μαρμελάδα" }, "price": 5.0, "diet": "vegetarian" },
+        { "id": "peanut-butter-toast", "name": { "en": "Multigrain toasted bread with homemade peanut butter, banana & honey", "el": "Πολύσπορο φρυγανισμένο ψωμί με σπιτικό φυστικοβούτυρο, μπανάνα & μέλι" }, "desc": { "en": "Optional maple syrup for a vegan option", "el": "Προαιρετικά σιρόπι σφένδαμου για βίγκαν" }, "price": 8.5, "diet": "vegetarian", "veganOption": true },
+        { "id": "yogurt-honey-walnuts", "name": { "en": "Yogurt with honey & walnuts", "el": "Γιαούρτι με μέλι & καρύδια" }, "desc": { "en": "Optional fresh fruit +€2", "el": "Προαιρετικά φρέσκα φρούτα +2€" }, "price": 6.5, "diet": "vegetarian" },
+        { "id": "yogurt-granola", "name": { "en": "Yogurt with honey & homemade granola", "el": "Γιαούρτι με μέλι & σπιτική γκρανόλα" }, "price": 7.5, "diet": "vegetarian" },
+        { "id": "yiasemi-breakfast", "name": { "en": "Yiasemi breakfast", "el": "Γιασεμί πρωινό" }, "desc": { "en": "Coffee or tea of your choice, fresh orange juice, homemade kneaded bread, butter, homemade jam, boiled egg, cheese & cake", "el": "Καφές ή τσάι της επιλογής σας, φρέσκος χυμός πορτοκάλι, ψωμί ζυμωτό, βούτυρο, σπιτική μαρμελάδα, αυγό βραστό, τυρί & κέικ" }, "price": 10.0, "diet": "vegetarian" },
+        { "id": "omelet", "name": { "en": "Omelet with 3 eggs & up to 2 ingredients", "el": "Ομελέτα με 3 αυγά έως 2 υλικά" }, "desc": { "en": "Each extra ingredient +€1", "el": "Κάθε έξτρα υλικό +1€" }, "price": 7.0, "diet": "vegetarian", "verify": "Vegetarian label is printed, but the ingredient choices are not listed. Confirm that no meat options are offered." },
+        { "id": "strapatsada", "name": { "en": "Strapatsada", "el": "Στραπατσάδα" }, "desc": { "en": "Scrambled eggs with tomato & feta cheese", "el": "Αυγά, ντομάτα, φέτα" }, "price": 7.0, "diet": "vegetarian" }
+      ]
+    },
+    {
+      "id": "salads", "group": "food",
+      "name": { "en": "Salads", "el": "Σαλάτες" },
+      "items": [
+        { "id": "lentil-salad", "name": { "en": "Lentil salad with sun-dried tomato, feta & mint", "el": "Φακές σαλάτα με λιαστή ντομάτα, φέτα & δυόσμο" }, "price": 6.5, "diet": "vegetarian" },
+        { "id": "beetroot-salad", "name": { "en": "Beetroot salad with yogurt, green apple & walnuts", "el": "Παντζαροσαλάτα με γιαούρτι, ξινόμηλο & καρύδια" }, "price": 6.5, "diet": "vegetarian" },
+        { "id": "greek-salad", "name": { "en": "Greek salad", "el": "Χωριάτικη σαλάτα" }, "desc": { "en": "Tomato, cucumber, onion, pepper, olives, feta cheese", "el": "Ντομάτα, αγγούρι, κρεμμύδι, πιπεριά, ελιές, φέτα" }, "prices": [ { "label": { "en": "small", "el": "μικρή" }, "price": 6.5 }, { "label": { "en": "large", "el": "μεγάλη" }, "price": 9.0 } ], "diet": "vegetarian" }
+      ]
+    },
+    {
+      "id": "meals", "group": "food",
+      "name": { "en": "Meals", "el": "Φαγάκια" },
+      "items": [
+        { "id": "meatballs", "name": { "en": "Baked meatballs with potatoes & flatbreads", "el": "Κεφτεδάκια φούρνου με πατάτες & πιτούλες" }, "price": 9.0, "diet": null },
+        { "id": "gemista", "name": { "en": "Stuffed tomatoes & peppers", "el": "Γεμιστά" }, "desc": { "en": "With rice, raisins, pine nuts, herbs", "el": "Ντομάτες & πιπεριές με ρύζι, σταφίδα, κουκουνάρι, μυρωδικά" }, "price": 9.0, "diet": null, "verify": "Marked vegetarian on the Greek menu only, not on the English one. Confirm." },
+        { "id": "moussaka", "name": { "en": "Moussaka", "el": "Μουσακάς" }, "price": 10.5, "diet": null }
+      ]
+    },
+    {
+      "id": "pies", "group": "food",
+      "name": { "en": "Pies", "el": "Πίτες" },
+      "items": [
+        { "id": "spinach-pie", "name": { "en": "Spinach pie", "el": "Σπανακόπιτα" }, "price": 6.5, "diet": "vegetarian" },
+        { "id": "cheese-pie-kataifi", "name": { "en": "Cheese pie with yellow cheeses & kataifi pastry", "el": "Τυρόπιτα με κίτρινα τυριά & φύλλο καταΐφι" }, "price": 6.5, "diet": "vegetarian" },
+        { "id": "patsavouropita", "name": { "en": "Patsavouropita with zucchini, carrot, mint & cheeses", "el": "Πατσαβουρόπιτα με κολοκύθι, καρότο, δυόσμο & τυριά" }, "price": 6.5, "diet": "vegetarian", "verify": "Appears on the Greek menu only. The English name is our translation. Confirm it is offered." }
+      ]
+    },
+    {
+      "id": "tarts", "group": "food",
+      "name": { "en": "Tarts", "el": "Τάρτες" },
+      "items": [
+        { "id": "vegetable-tart", "name": { "en": "Vegetable tart", "el": "Τάρτα λαχανικών" }, "price": 6.5, "diet": "vegan" },
+        { "id": "bacon-cheese-tart", "name": { "en": "Bacon & cheese tart", "el": "Τάρτα με μπέικον & τυρί" }, "price": 6.5, "diet": null, "verify": "The official menu prints a VEGETARIAN mark on this bacon tart. Label withheld until corrected." },
+        { "id": "tomato-feta-basil-tart", "name": { "en": "Tomato, feta & basil tart", "el": "Τάρτα με ντομάτα, φέτα & βασιλικό" }, "price": 6.5, "diet": "vegetarian" }
+      ]
+    },
+    {
+      "id": "small-plates", "group": "food",
+      "name": { "en": "Small plates", "el": "Συνοδευτικά" },
+      "items": [
+        { "id": "zucchini-fritters", "name": { "en": "Zucchini fritters", "el": "Κολοκυθοκεφτέδες" }, "price": 7.5, "diet": "vegetarian" },
+        { "id": "stuffed-mushrooms", "name": { "en": "Stuffed mushrooms with plant-based garlic butter & breadcrumbs", "el": "Μανιτάρια γεμιστά με σκορδοβούτυρο φυτικό & τριμμένη φρυγανιά" }, "price": 7.5, "diet": "vegan" },
+        { "id": "grilled-goat-cheese", "name": { "en": "Grilled goat cheese with thyme & honey", "el": "Ψητό κατσικίσιο τυρί με θυμάρι & μέλι" }, "price": 8.5, "diet": "vegetarian" },
+        { "id": "grilled-feta", "name": { "en": "Grilled feta cheese with homemade chutney", "el": "Ψητή φέτα με σπιτικό τσάτνεϊ" }, "price": 6.0, "diet": "vegetarian", "verify": "The English menu marks it vegetarian; the Greek menu marks it VEGAN. It contains feta, so vegetarian is shown." },
+        { "id": "rusk-cheese-olives", "name": { "en": "Rusk with cheese & olives", "el": "Παξιμάδι με τυρί & ελιές" }, "price": 4.5, "diet": null, "verify": "The official menu prints a VEGAN mark on a dish with cheese. Label withheld until corrected." },
+        { "id": "rusk-pickles-olives", "name": { "en": "Rusk with pickled cucumber & olives", "el": "Παξιμάδι με αγγουράκι τουρσί & ελιές" }, "price": 4.0, "diet": "vegan" },
+        { "id": "bread-portion", "name": { "en": "Portion of homemade kneaded bread", "el": "Ζυμωτό ψωμί μερίδα" }, "price": 2.5, "diet": "vegan" }
+      ]
+    },
+    {
+      "id": "desserts", "group": "food",
+      "name": { "en": "Desserts", "el": "Γλυκά" },
+      "items": [
+        { "id": "lemon-pie", "name": { "en": "Lemon pie", "el": "Λεμονόπιτα" }, "price": 6.0, "diet": "vegetarian" },
+        { "id": "orange-pie", "name": { "en": "Orange pie", "el": "Πορτοκαλόπιτα" }, "price": 6.0, "diet": "vegetarian" },
+        { "id": "galaktoboureko", "name": { "en": "Galaktoboureko", "el": "Γαλακτομπούρεκο" }, "price": 6.0, "diet": "vegetarian" },
+        { "id": "baklava", "name": { "en": "Baklava with olive oil & honey", "el": "Μπακλαβάς με ελαιόλαδο & μέλι" }, "price": 6.0, "diet": "vegetarian" },
+        { "id": "cheesecake", "name": { "en": "Cheesecake", "el": "Cheesecake" }, "price": 6.0, "diet": "vegetarian" },
+        { "id": "mosaic", "name": { "en": "Mosaic cake", "el": "Μωσαϊκό" }, "desc": { "en": "Chocolate biscuit dessert", "el": "Γλυκό με σοκολάτα & μπισκότα" }, "price": 6.0, "diet": "vegetarian" }
+      ]
+    },
+    {
+      "id": "coffee", "group": "drinks",
+      "name": { "en": "Coffee & beverages", "el": "Καφές & ροφήματα" },
+      "served": { "en": "Served 9:00–19:00", "el": "Σερβίρονται 9:00–19:00" },
+      "footnote": { "en": "Tea, herbs and chocolates are also served cold +€0.50", "el": "Τσάι, βότανα και σοκολάτες σερβίρονται και κρύα +0,50€" },
+      "items": [
+        { "id": "espresso", "name": { "en": "Espresso", "el": "Espresso" }, "desc": { "en": "Estrella del Caribe", "el": "Estrella del Caribe" }, "price": 3.0 },
+        { "id": "freddo-espresso", "name": { "en": "Freddo espresso / Double espresso", "el": "Freddo espresso / Διπλός" }, "price": 4.0, "verify": "Printed as 'Freddo/Double' under Espresso; confirm wording." },
+        { "id": "cappuccino", "name": { "en": "Cappuccino", "el": "Cappuccino" }, "desc": { "en": "Estrella del Caribe", "el": "Estrella del Caribe" }, "price": 4.5 },
+        { "id": "freddo-cappuccino", "name": { "en": "Freddo cappuccino / Double cappuccino", "el": "Freddo cappuccino / Διπλός" }, "price": 5.5, "verify": "Printed as 'Freddo/Double' under Cappuccino; confirm wording." },
+        { "id": "latte", "name": { "en": "Latte", "el": "Latte" }, "price": 5.0 },
+        { "id": "greek-coffee-single", "name": { "en": "Greek coffee, single", "el": "Ελληνικός καφές, μονός" }, "desc": { "en": "Served with a spoon sweet", "el": "Σερβίρεται με γλυκό του κουταλιού" }, "price": 3.0 },
+        { "id": "greek-coffee-double", "name": { "en": "Greek coffee, double", "el": "Ελληνικός καφές, διπλός" }, "desc": { "en": "Served with a spoon sweet", "el": "Σερβίρεται με γλυκό του κουταλιού" }, "price": 4.0 },
+        { "id": "hot-chocolate", "name": { "en": "Hot chocolate", "el": "Σοκολάτα" }, "price": 4.5 },
+        { "id": "tea", "name": { "en": "Tea", "el": "Τσάι" }, "desc": { "en": "Black Ceylon, green jasmine, Earl Grey, mountain tea", "el": "Μαύρο Κεϋλάνης, πράσινο γιασεμί, Earl Grey, τσάι του βουνού" }, "price": 4.5 },
+        { "id": "herbal-blend", "name": { "en": "Greek herbal blend", "el": "Μείγμα ελληνικών βοτάνων" }, "price": 5.0 },
+        { "id": "lemonade", "name": { "en": "Homemade concentrated lemonade with ginger, sugar-free", "el": "Σπιτική συμπυκνωμένη λεμονάδα με τζίντζερ χωρίς ζάχαρη" }, "price": 5.5 },
+        { "id": "sour-cherry", "name": { "en": "Homemade concentrated sour cherry juice", "el": "Σπιτική συμπυκνωμένη βυσσινάδα" }, "price": 6.0 }
+      ]
+    },
+    {
+      "id": "juices", "group": "drinks",
+      "name": { "en": "Fresh juices", "el": "Φυσικοί χυμοί" },
+      "items": [
+        { "id": "orange-juice", "name": { "en": "Orange", "el": "Πορτοκάλι" }, "price": 4.5 },
+        { "id": "pineapple-mango", "name": { "en": "Pineapple, mango, apple & mint", "el": "Ανανάς, μάνγκο, μήλο & μέντα" }, "price": 7.5 },
+        { "id": "blueberry-banana", "name": { "en": "Blueberry, banana, aronia berry & ginger", "el": "Blueberry, μπανάνα, αρώνια & ginger" }, "price": 7.5 },
+        { "id": "spinach-broccoli", "name": { "en": "Spinach, broccoli, apple & mint", "el": "Σπανάκι, μπρόκολο, μήλο & μέντα" }, "price": 7.5 }
+      ]
+    },
+    {
+      "id": "water", "group": "drinks",
+      "name": { "en": "Water", "el": "Νερό" },
+      "items": [
+        { "id": "zagori-water", "name": { "en": "Bottled Zagori water 1L", "el": "Νερό εμφιαλωμένο Ζαγόρι 1L" }, "price": 3.0 }
+      ]
+    },
+    {
+      "id": "beer", "group": "bar",
+      "name": { "en": "Beer", "el": "Μπύρα" },
+      "items": [
+        { "id": "athinais", "name": { "en": "Athinais lager beer, Athens", "el": "Αθηναΐσα lager beer, Αθήνα" }, "desc": { "en": "500 ml", "el": "500 ml" }, "price": 6.0 },
+        { "id": "corfu-pilsner", "name": { "en": "Corfu Ionian Pilsner, Corfu", "el": "Corfu Ionian Pilsner, Κέρκυρα" }, "desc": { "en": "500 ml", "el": "500 ml" }, "price": 6.0 },
+        { "id": "nisos", "name": { "en": "Nisos", "el": "Nisos" }, "desc": { "en": "330 ml", "el": "330 ml" }, "price": 6.0 }
+      ]
+    },
+    {
+      "id": "ouzo", "group": "bar",
+      "name": { "en": "Ouzo", "el": "Ούζο" },
+      "items": [
+        { "id": "giannatsi-45", "name": { "en": "Giannatsi Ouzo Plomariou, premium dry, Lesvos", "el": "Γιαννατσή, Ούζο Πλωμαρίου, premium dry, Λέσβος" }, "desc": { "en": "200 ml (45% vol)", "el": "200 ml (45% vol)" }, "price": 12.0, "verify": "Listed on the English menu only. Confirm it is offered." },
+        { "id": "giannatsi-40", "name": { "en": "Giannatsi Ouzo Plomariou, premium dry, Lesvos", "el": "Γιαννατσή, Ούζο Πλωμαρίου, premium dry, Λέσβος" }, "desc": { "en": "200 ml (40% vol)", "el": "200 ml (40% vol)" }, "price": 10.0 },
+        { "id": "trikene", "name": { "en": "Ouzo Trikene, Mesolongi", "el": "Ούζο Τρικενέ, Μεσολόγγι" }, "desc": { "en": "200 ml (39% vol)", "el": "200 ml (39% vol)" }, "price": 8.0 }
+      ]
+    },
+    {
+      "id": "tsipouro", "group": "bar",
+      "name": { "en": "Tsipouro", "el": "Τσίπουρο" },
+      "items": [
+        { "id": "agioneri", "name": { "en": "Agioneri tsipouro, Meteora, aged in oak barrels", "el": "Τσίπουρο Αγιονέρι, Μετέωρα, παλαιωμένο σε δρύινα βαρέλια" }, "desc": { "en": "200 ml (40% vol)", "el": "200 ml (40% vol)" }, "price": 14.0 },
+        { "id": "katogi", "name": { "en": "Katogi Averoff tsipouro, Epirus", "el": "Τσίπουρο Κατώγι Αβέρωφ, Ήπειρος" }, "desc": { "en": "200 ml (40% vol)", "el": "200 ml (40% vol)" }, "price": 12.0 },
+        { "id": "35n-blended", "name": { "en": "The Finest Artisanal Tsikoudia, 35N blended multi-varietal, Crete", "el": "The Finest Artisanal Τσικουδιά, 35N blended πολυποικιλιακή, Κρήτη" }, "desc": { "en": "200 ml (38% vol)", "el": "200 ml (38% vol)" }, "price": 17.0 },
+        { "id": "35n-syrah", "name": { "en": "The Finest Artisanal Tsikoudia, 35N Syrah, Crete", "el": "The Finest Artisanal Τσικουδιά, 35N Syrah, Κρήτη" }, "desc": { "en": "200 ml (38% vol)", "el": "200 ml (38% vol)" }, "price": 20.0 }
+      ]
+    },
+    {
+      "id": "spirits", "group": "bar",
+      "name": { "en": "Spirits & shots", "el": "Αλκοολούχα" },
+      "items": [
+        { "id": "plain-spirit", "name": { "en": "Plain spirits (drinks)", "el": "Απλό" }, "price": 9.0 },
+        { "id": "special-spirit", "name": { "en": "Special spirits (drinks)", "el": "Σπέσιαλ" }, "price": 11.0 },
+        { "id": "liqueurs", "name": { "en": "Homemade liqueurs", "el": "Σπιτικά λικέρ" }, "price": 8.5 },
+        { "id": "plain-shot", "name": { "en": "Plain shot", "el": "Σφηνάκι" }, "price": 4.0 },
+        { "id": "special-shot", "name": { "en": "Special shot", "el": "Σφηνάκι σπέσιαλ" }, "price": 7.0 },
+        { "id": "belvedere", "name": { "en": "Belvedere vodka special", "el": "Σπέσιαλ βότκα Belvedere" }, "price": 14.0 },
+        { "id": "talisker", "name": { "en": "Talisker malt whiskey", "el": "Malt whiskey Talisker" }, "price": 16.0 },
+        { "id": "sangria", "name": { "en": "Homemade sangria (glass)", "el": "Σανγκρία σπιτική (ποτήρι)" }, "price": 6.5 },
+        { "id": "sparkling-glass", "name": { "en": "Sparkling wine (glass)", "el": "Αφρώδης οίνος (ποτήρι)" }, "price": 8.0 },
+        { "id": "mulled-wine", "name": { "en": "Hot sweet mulled wine with spices", "el": "Ζεστό γλυκό κρασί με μπαχαρικά" }, "price": 6.5 }
+      ]
+    },
+    {
+      "id": "wine", "group": "bar",
+      "name": { "en": "Wine", "el": "Κρασί" },
+      "items": [
+        { "id": "w-bougiouri", "kind": "white", "name": { "en": "Ktima Bougiouri, Malagousia, Attica", "el": "Κτήμα Μπουγιούρη, Μαλαγουζιά, Αττική" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 21.0 },
+        { "id": "w-gerovassiliou", "kind": "white", "name": { "en": "Ktima Gerovassiliou, Assyrtiko & Malagousia, Thessaloniki", "el": "Κτήμα Γεροβασιλείου, Ασύρτικο & Μαλαγουζιά, Θεσσαλονίκη" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 45.0 },
+        { "id": "w-biblia-sb-assyrtiko", "kind": "white", "name": { "en": "Ktima Biblia Chora, Sauvignon Blanc & Assyrtiko, Kavala (Pangaio)", "el": "Κτήμα Βιβλία Χώρα, Sauvignon Blanc & Ασύρτικο, Καβάλα (Παγγαίο)" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 45.0 },
+        { "id": "w-dio-ypsi-dialogos", "kind": "white", "name": { "en": "Ktima Dio Ypsi 'Dialogos', Kydonitsa & Assyrtiko, Pyrgos, Ilia", "el": "Κτήμα Δύο Ύψη 'Διάλογος', Κυδωνίτσα & Ασύρτικο, Πύργος Ηλείας" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 34.0 },
+        { "id": "w-glinavos-sb", "kind": "white", "name": { "en": "Ktima Glinavos 'Plagies', Sauvignon Blanc, Zitsa", "el": "Κτήμα Γκλίναβος 'Πλαγιές', Sauvignon Blanc, Ζίτσα" }, "desc": { "en": "750 ml · glass €6.00", "el": "750 ml · ποτήρι 6,00€" }, "price": 20.0 },
+        { "id": "w-kir-yianni-4-limnes", "kind": "white", "name": { "en": "Ktima Kir-Yianni '4 Limnes', Chardonnay, Gewürztraminer, Macedonia", "el": "Κτήμα Κυρ-Γιάννη '4 Λίμνες', Chardonnay, Gewürztraminer, Μακεδονία" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 38.0 },
+        { "id": "w-kir-yianni-paranga", "kind": "white", "name": { "en": "Ktima Kir-Yianni 'Paranga', Roditis, Malagousia, Macedonia", "el": "Κτήμα Κυρ-Γιάννη 'Παράγκα', Ροδίτης, Μαλαγουζιά, Μακεδονία" }, "desc": { "en": "750 ml · glass €6.50", "el": "750 ml · ποτήρι 6,50€" }, "price": 20.0 },
+        { "id": "w-dio-ypsi", "kind": "white", "name": { "en": "Ktima Dio Ypsi, Kydonitsa, Assyrtiko", "el": "Κτήμα Δύο Ύψη, Κυδωνίτσα, Ασύρτικο" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 34.0 },
+        { "id": "r-lantides", "kind": "rose", "name": { "en": "Ktima Lantides '5 Senses', Agiorgitiko, Peloponnese", "el": "Κτήμα Λαντίδη '5 Senses', Αγιωργίτικο, Πελοπόννησος" }, "desc": { "en": "750 ml · glass €6.00", "el": "750 ml · ποτήρι 6,00€" }, "price": 21.0 },
+        { "id": "r-vieille-ferme", "kind": "rose", "name": { "en": "La Vieille Ferme, Cinsault, Grenache Noir, Syrah, France", "el": "La Vieille Ferme, Cinsault, Grenache Noir, Syrah, Γαλλία" }, "desc": { "en": "750 ml · glass €6.50", "el": "750 ml · ποτήρι 6,50€" }, "price": 33.0 },
+        { "id": "red-biblia-cab-merlot-agio", "kind": "red", "name": { "en": "Ktima Biblia Chora, Cabernet, Merlot, Agiorgitiko, Kokkinochori, Kavala", "el": "Κτήμα Βιβλία Χώρα, Cabernet, Merlot, Αγιωργίτικο, Κοκκινοχώρι Καβάλας" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 51.0 },
+        { "id": "red-gaia-monograph", "kind": "red", "name": { "en": "Ktima Gaia 'Monograph', Agiorgitiko, Peloponnese", "el": "Κτήμα Γαία 'Monograph', Αγιωργίτικο, Πελοπόννησος" }, "desc": { "en": "750 ml · glass €6.50", "el": "750 ml · ποτήρι 6,50€" }, "price": 20.0 },
+        { "id": "red-dourakis-monoceros", "kind": "red", "name": { "en": "Ktima Dourakis 'Monoceros', Merlot, Grenache Rouge, Chania, Crete", "el": "Κτήμα Δουράκη 'Monoceros', Merlot, Grenache Rouge, Χανιά, Κρήτη" }, "desc": { "en": "750 ml · glass €6.50", "el": "750 ml · ποτήρι 6,50€" }, "price": 20.0 },
+        { "id": "red-avantis-syrah", "kind": "red", "name": { "en": "Ktima Avantis 'Syrah', Syrah, Evia", "el": "Κτήμα Αβαντίς 'Syrah', Syrah, Εύβοια" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 30.0 },
+        { "id": "red-biblia-merlot-cs-agio", "kind": "red", "name": { "en": "Ktima Biblia Chora, Merlot, Cabernet Sauvignon, Agiorgitiko, Kokkinochori, Kavala", "el": "Κτήμα Βιβλία Χώρα, Merlot, Cabernet Sauvignon, Αγιωργίτικο, Κοκκινοχώρι Καβάλας" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 45.0 },
+        { "id": "red-glinavos-syrah", "kind": "red", "name": { "en": "Ktima Glinavos 'Plagies', Syrah, Zitsa", "el": "Κτήμα Γκλίναβος 'Πλαγιές', Syrah, Ζίτσα" }, "desc": { "en": "750 ml · glass €6.00", "el": "750 ml · ποτήρι 6,00€" }, "price": 20.0 },
+        { "id": "s-cinzano", "kind": "sparkling", "name": { "en": "Cinzano, Glera, Italy", "el": "Cinzano, Glera, Ιταλία" }, "desc": { "en": "750 ml", "el": "750 ml" }, "price": 26.0 },
+        { "id": "champagne-deutz", "kind": "sparkling", "name": { "en": "Champagne Deutz Brut Classic", "el": "Σαμπάνια Deutz Brut Classic" }, "price": 120.0 }
+      ]
+    },
+    {
+      "id": "cocktails", "group": "bar",
+      "name": { "en": "Cocktails", "el": "Cocktails" },
+      "items": [
+        { "id": "classic-cocktails", "name": { "en": "Classic cocktails", "el": "Classic cocktails" }, "desc": { "en": "Mojito, Caipirinha, Margarita, Daiquiri (strawberry, passion fruit, mango, peach; Mojito & Caipirinha also pineapple), Negroni, Bloody Mary, Paloma, Zombie, Aperol Spritz, Campari Spritz, Vermouth Spritz", "el": "Mojito, Caipirinha, Margarita, Daiquiri (φράουλα, φρούτο του πάθους, μάνγκο, ροδάκινο· Mojito & Caipirinha και ανανάς), Negroni, Bloody Mary, Paloma, Zombie, Aperol Spritz, Campari Spritz, Vermouth Spritz" }, "price": 12.0 },
+        { "id": "yiasemi-cocktails", "name": { "en": "Yiasemi cocktails", "el": "Yiasemi cocktails" }, "desc": { "en": "Diosmini · Granny's Spritz (jasmine, lemon, strawberry, spearmint, rose geranium, pomegranate, mandarin, watermelon)", "el": "Diosmini · Granny's Spritz (γιασεμί, λεμόνι, φράουλα, δυόσμος, αρμπαρόριζα, ρόδι, μανταρίνι, καρπούζι)" }, "price": 12.0 },
+        { "id": "champagne-cocktails", "name": { "en": "Champagne cocktails", "el": "Champagne cocktails" }, "desc": { "en": "Yiasemi Royal, Mimosa, Bellini, Strawberry Delight", "el": "Yiasemi Royal, Mimosa, Bellini, Strawberry Delight" }, "price": 14.0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "_comment": "Single source of truth for café details. Leave a value null when it is not confirmed; the site then hides it or shows 'please call'. Never fill in guesses.",
+  "name": { "en": "Yiasemi", "el": "Γιασεμί" },
+  "tagline": { "en": "Café bistrot · Plaka, Athens", "el": "Καφέ μπιστρό · Πλάκα, Αθήνα" },
+  "address": {
+    "street": { "en": "Mnisikleous 23", "el": "Μνησικλέους 23" },
+    "area": { "en": "Plaka", "el": "Πλάκα" },
+    "city": { "en": "Athens", "el": "Αθήνα" },
+    "postalCode": "105 55",
+    "region": { "en": "Attica", "el": "Αττική" },
+    "country": "GR"
+  },
+  "geo": null,
+  "phone": "+302130417937",
+  "phoneDisplay": "+30 213 041 7937",
+  "email": null,
+  "officialWebsite": "https://www.yiasemi.gr/",
+  "instagram": "https://www.instagram.com/yiasemi_bistrot",
+  "openingHours": null,
+  "specialHours": [],
+  "notice": null,
+  "menuSource": {
+    "url": "https://www.yiasemi.gr/menu",
+    "note": "Transcribed from the menu images on yiasemi.gr (headed 'MENU · Thiseio · Yiasemi Cottage'). Client must confirm it applies to Mnisikleous 23."
+  },
+  "foodSafetySupervisor": { "en": "Maria And. Kouzeli", "el": "Μαρία Ανδ. Κουζέλη" }
+}

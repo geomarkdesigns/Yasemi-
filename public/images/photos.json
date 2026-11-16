@@ -2,6 +2,7 @@
  "hero": {
   "base": "mnisikleous-street-steps-plaka-athens",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -23,6 +24,7 @@
  "about": {
   "base": "plaka-stepped-lane-cafe-tables",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -44,6 +46,7 @@
  "evening-1": {
   "base": "mnisikleous-street-night-lanterns",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -65,6 +68,7 @@
  "evening-2": {
   "base": "mnisikleous-street-summer-night-plaka",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -86,6 +90,7 @@
  "street-1": {
   "base": "mnisikleous-street-morning-umbrellas",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -107,6 +112,7 @@
  "street-2": {
   "base": "mnisikleous-street-lunch-plaka",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -128,6 +134,7 @@
  "street-3": {
   "base": "mnisikleous-street-busy-afternoon",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -149,6 +156,7 @@
  "plaka-1": {
   "base": "plaka-steps-evening-tables",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -170,6 +178,7 @@
  "sig-coffee": {
   "base": "greek-coffee-copper-briki",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -191,6 +200,7 @@
  "coffee-2": {
   "base": "greek-style-coffee-glass-of-water",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -212,6 +222,7 @@
  "sig-sweet": {
   "base": "portokalopita-greek-orange-cake",
   "widths": [
+   360,
    480,
    800,
    1200,
@@ -233,6 +244,7 @@
  "sig-pie": {
   "base": "spanakopita-greek-spinach-pie",
   "widths": [
+   360,
    480,
    800,
    1080

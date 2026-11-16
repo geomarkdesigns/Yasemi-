@@ -16,7 +16,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools/.cache"
 OUT = ROOT / "public/images"
 CONFIG = json.loads((ROOT / "tools/photos.config.json").read_text(encoding="utf-8"))
-WIDTHS = [480, 800, 1200, 1600]
+WIDTHS = [360, 480, 800, 1200, 1600]
 UA = "YiasemiStaticSite/1.0 (image build script)"
 
 def fetch(title, dest):
@@ -64,7 +64,7 @@ def main():
         for w in widths:
             h = round(im.height * w / im.width)
             r = im.resize((w, h), Image.LANCZOS)
-            r.save(OUT / f'{c["base"]}-{w}.webp', "WEBP", quality=80, method=6)
+            r.save(OUT / f'{c["base"]}-{w}.webp', "WEBP", quality=72, method=6)
             r.save(OUT / f'{c["base"]}-{w}.jpg', "JPEG", quality=82, optimize=True, progressive=True)
         big = widths[-1]
         manifest[c["id"]] = {"base": c["base"], "widths": widths, "w": big, "h": round(im.height * big / im.width),

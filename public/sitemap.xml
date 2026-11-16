@@ -2,8 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yiasemi.vercel.app/</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el"/>
@@ -12,8 +10,6 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/el</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el"/>
@@ -22,8 +18,6 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/menu</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/menu"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/menu"/>
@@ -31,8 +25,6 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/el/menu</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/menu"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/menu"/>
@@ -40,8 +32,6 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/visit</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/visit"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/visit"/>
@@ -49,8 +39,6 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/el/visit</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/visit"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/visit"/>
@@ -58,9 +46,7 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/photos</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/photos"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/photos"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yiasemi.vercel.app/photos"/>
@@ -79,9 +65,7 @@
   </url>
   <url>
     <loc>https://yiasemi.vercel.app/el/photos</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/photos"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/photos"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yiasemi.vercel.app/photos"/>
@@ -97,5 +81,19 @@
     <image:image><image:loc>https://yiasemi.vercel.app/images/greek-style-coffee-glass-of-water-1600.jpg</image:loc></image:image>
     <image:image><image:loc>https://yiasemi.vercel.app/images/portokalopita-greek-orange-cake-1600.jpg</image:loc></image:image>
     <image:image><image:loc>https://yiasemi.vercel.app/images/spanakopita-greek-spinach-pie-1080.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://yiasemi.vercel.app/privacy</loc>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/privacy"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yiasemi.vercel.app/privacy"/>
+  </url>
+  <url>
+    <loc>https://yiasemi.vercel.app/el/privacy</loc>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yiasemi.vercel.app/privacy"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://yiasemi.vercel.app/el/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yiasemi.vercel.app/privacy"/>
   </url>
 </urlset>
