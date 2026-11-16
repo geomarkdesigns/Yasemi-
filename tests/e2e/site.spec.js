@@ -67,11 +67,17 @@ test.describe("routes & metadata", () => {
   });
 
   test("in-site navigation always revalidates pages (never shows a stale cached copy)", async ({ page }) => {
+    // Record the options main.js passes to fetch(); works the same locally and on production.
+    await page.addInitScript(() => {
+      const orig = window.fetch; window.__fetchModes = [];
+      window.fetch = (input, init) => { window.__fetchModes.push([String(input), init && init.cache]); return orig(input, init); };
+    });
     await page.goto("/");
-    const req = page.waitForRequest((r) => r.url().endsWith("/menu") && r.resourceType() === "fetch");
+    await page.waitForLoadState("load");
     await page.locator('.links a[href="/menu"]').first().dispatchEvent("pointerover");
-    const r = await req;
-    expect((await r.allHeaders())["cache-control"] || "").toMatch(/no-cache|max-age=0/);   // both force revalidation
+    await expect.poll(() => page.evaluate(() => window.__fetchModes.filter(([u]) => u.endsWith("/menu")).length)).toBeGreaterThan(0);
+    const modes = await page.evaluate(() => window.__fetchModes.map(([, m]) => m));
+    expect(modes.every((m) => m === "no-cache")).toBe(true);
   });
 });
 

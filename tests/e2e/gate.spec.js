@@ -25,6 +25,7 @@ test("leaving the site forgets the code", async ({ page, context }) => {
   await page.goto("/");
   await page.fill("#code", process.env.ACCESS_CODE || ""); await page.click("button[type=submit]");
   await expect(page.locator("h1")).toContainText("café bistrot");
+  await page.waitForLoadState("load");           // the sign-out-on-leave listener is registered by main.js
   await page.close(); await new Promise((r) => setTimeout(r, 1500));
   const p2 = await context.newPage(); await p2.goto("/menu");
   await expect(p2.locator("#code")).toBeVisible();

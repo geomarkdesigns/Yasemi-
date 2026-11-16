@@ -78,7 +78,9 @@ def pic(pid, cls="", color="c-stone", sizes="100vw", eager=False, extra="", cap=
         return f'<figure class="frame {color} {cls}"{extra}>{ph}</figure>'
     alt = "" if alt_in_caption else esc(p["alt"][LANG])   # caption already describes it: avoid double reading
     webp = ", ".join(f'/images/{p["base"]}-{w}.webp {w}w' for w in p["widths"])
-    jpg = ", ".join(f'/images/{p["base"]}-{w}.jpg {w}w' for w in p["widths"])
+    # JPEG is only the fallback for browsers without WebP; capped at 1200px (the 1600px JPEGs are heavy and
+    # were unreliable through the interim CDN). Every current browser uses the WebP <source>.
+    jpg = ", ".join(f'/images/{p["base"]}-{w}.jpg {w}w' for w in p["widths"] if w <= 1200)
     mid = p["widths"][min(1, len(p["widths"]) - 1)]
     load = ('loading="eager" fetchpriority="high"' if eager == "high" or (eager is True and pid == "hero") else 'loading="eager"') if eager else 'loading="lazy"'
     caption = f'<figcaption>{cap}</figcaption>' if cap else ""
@@ -98,7 +100,7 @@ def credit(pid):
 def img_abs(pid, w=None):
     p = PHOTOS.get(pid)
     if not p: return BASE + "/images/og.jpg"
-    return f'{BASE}/images/{p["base"]}-{w or p["widths"][-1]}.jpg'
+    return f'{BASE}/images/{p["base"]}-{w or max(x for x in p["widths"] if x <= 1200)}.jpg'
 
 # ------------------------------------------------------------ structured data
 def address_ld():
