@@ -4,8 +4,11 @@
 // variable (type "sensitive") on the Vercel project.
 // To go live: remove this file from the deployment (and the X-Robots-Tag header).
 
-const COOKIE = "yiasemi_access";
-const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+const COOKIE = "yiasemi_access";      // HttpOnly session cookie: "<issued-ms>.<sha256>"
+const FLAG = "yiasemi_gated";          // readable flag so the page knows to sign out when the visitor leaves
+const MAX_MS = 12 * 60 * 60 * 1000;    // hard limit even if the browser restores its session
+// No Max-Age/Expires: the cookies are deleted when the browser closes, and main.js
+// signs out (sendBeacon /__logout) when the tab is closed or the visitor leaves the site.
 
 async function sha256(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -18,9 +21,17 @@ function safeEqual(a, b) {
   return d === 0;
 }
 function cookieValue(req) {
-  const m = (req.headers.get("cookie") || "").match(new RegExp("(?:^|;\\s*)" + COOKIE + "=([a-f0-9]{64})"));
+  const m = (req.headers.get("cookie") || "").match(new RegExp("(?:^|;\\s*)" + COOKIE + "=(\\d{13}\\.[a-f0-9]{64})"));
   return m ? m[1] : "";
 }
+async function makeToken(secret, ts) { return ts + "." + await sha256(secret + ":" + ts); }
+async function validToken(secret, value) {
+  if (!value) return false;
+  const ts = Number(value.split(".")[0]);
+  if (!Number.isFinite(ts) || Date.now() - ts > MAX_MS || ts - Date.now() > 60000) return false;
+  return safeEqual(await makeToken(secret, ts), value);
+}
+const CLEAR = [`${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`, `${FLAG}=; Path=/; Max-Age=0; Secure; SameSite=Lax`];
 function safeNext(v) {
   return typeof v === "string" && v.startsWith("/") && !v.startsWith("//") && !v.startsWith("/__access") ? v : "/";
 }
@@ -69,11 +80,15 @@ ${error ? '<p id="err" class="err" role="alert">Λάθος κωδικός. <span
 export default async function middleware(request) {
   const code = process.env.ACCESS_CODE;
   if (!code) return new Response("Site temporarily unavailable.", { status: 503, headers: { "cache-control": "no-store" } });
-  const token = await sha256("yiasemi-gate-v1:" + code);
+  const secret = await sha256("yiasemi-gate-v2:" + code);   // changing ACCESS_CODE invalidates every session
   const url = new URL(request.url);
 
   if (url.pathname === "/__logout") {
-    return new Response(null, { status: 303, headers: { location: "/", "set-cookie": `${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`, "cache-control": "no-store" } });
+    const h = new Headers({ "cache-control": "no-store" });
+    CLEAR.forEach((c) => h.append("set-cookie", c));
+    if (request.method === "POST") return new Response(null, { status: 204, headers: h });   // sendBeacon on leave
+    h.set("location", "/");
+    return new Response(null, { status: 303, headers: h });
   }
 
   if (url.pathname === "/__access") {
@@ -81,14 +96,17 @@ export default async function middleware(request) {
     const form = await request.formData().catch(() => null);
     const given = String(form?.get("code") || "").trim().slice(0, 64);
     const next = safeNext(String(form?.get("next") || "/"));
-    if (safeEqual(await sha256("yiasemi-gate-v1:" + given), token)) {
-      return new Response(null, { status: 303, headers: { location: next, "set-cookie": `${COOKIE}=${token}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Lax`, "cache-control": "no-store" } });
+    if (safeEqual(await sha256("yiasemi-gate-v2:" + given), secret)) {
+      const h = new Headers({ location: next, "cache-control": "no-store" });
+      h.append("set-cookie", `${COOKIE}=${await makeToken(secret, Date.now())}; Path=/; HttpOnly; Secure; SameSite=Lax`);
+      h.append("set-cookie", `${FLAG}=1; Path=/; Secure; SameSite=Lax`);
+      return new Response(null, { status: 303, headers: h });
     }
     await sleep(1200);                                   // slow down guessing
     return gatePage(next, true, 401);
   }
 
-  if (safeEqual(cookieValue(request), token)) {
+  if (await validToken(secret, cookieValue(request))) {
     return new Response(null, { headers: { "x-middleware-next": "1" } });   // continue to the site
   }
   return gatePage(url.pathname + url.search, false, 401);

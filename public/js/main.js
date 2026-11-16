@@ -10,6 +10,14 @@
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
   const isEl = () => root.lang === "el";
+
+  /* ---------- Pre-launch gate: sign out when the visitor leaves (no-op once the gate is removed) ---------- */
+  if (/(?:^|;\s*)yiasemi_gated=1/.test(document.cookie)) {
+    // In-site navigation never unloads the page, so this fires only on closing the tab,
+    // going to another website, or reloading.
+    addEventListener("pagehide", () => { try { navigator.sendBeacon("/__logout"); } catch (e) {} });
+    addEventListener("pageshow", (e) => { if (e.persisted) location.reload(); });   // back-button cache: ask the server again
+  }
   const L = (en, el) => (isEl() ? el : en);
 
   /* ---------- Theme (light by default; stored only after the visitor chooses) ---------- */
