@@ -139,7 +139,7 @@ def head(path, title, desc, ld, og_img=None, noindex=False, og_type="website"):
 <meta name="robots" content="{robots}">
 <link rel="canonical" href="{abs_url(path)}">
 {alts}<meta name="theme-color" content="#f6f0e6">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=yes">
 <meta name="geo.region" content="GR-I">
 <meta name="geo.placename" content="{T("Plaka, Athens", "Πλάκα, Αθήνα")}">
@@ -167,7 +167,7 @@ def head(path, title, desc, ld, og_img=None, noindex=False, og_type="website"):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {hero_preload}<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500&family=GFS+Didot&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
-<script>try{{var d=document.documentElement,t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");d.setAttribute("data-theme",t)}}catch(e){{}}</script>
+<script>try{{var d=document.documentElement,t=localStorage.getItem("theme")||"light";d.setAttribute("data-theme",t)}}catch(e){{}}</script>
 <script src="/js/main.js" defer></script>
 <script type="application/ld+json">{graph}</script>
 </head>
