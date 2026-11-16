@@ -191,7 +191,7 @@
     btns.forEach((b) => b.addEventListener("click", () => {
       btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       const f = b.dataset.filter; let n = 0;
-      items.forEach((it) => { const show = f === "all" || it.dataset.cat === f; it.hidden = !show; if (show) n++; });
+      items.forEach((it) => { const show = f === "all" || (f.startsWith("origin:") ? it.dataset.origin === f.slice(7) : it.dataset.cat === f); it.hidden = !show; if (show) n++; });
       if (count) count.textContent = L(`${n} photos shown`, `Εμφανίζονται ${n} φωτογραφίες`);
     }));
     const el = document.querySelector(".lightbox");
@@ -248,6 +248,33 @@
     lb = { el, close };
   }
 
+  /* ---------- Opening hours: highlight today in Europe/Athens time ---------- */
+  function athensToday() {
+    try {
+      const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Athens", year: "numeric", month: "2-digit", day: "2-digit", weekday: "short" }).formatToParts(new Date());
+      const get = (t) => parts.find((p) => p.type === t)?.value;
+      const iso = `${get("year")}-${get("month")}-${get("day")}`;
+      const dow = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(get("weekday"));
+      return /^\d{4}-\d{2}-\d{2}$/.test(iso) && dow >= 0 ? { iso, md: iso.slice(5), dow } : null;
+    } catch (e) { return null; }
+  }
+  function initHours() {
+    const box = document.querySelector("[data-hours]");
+    const notice = document.querySelector(".hours-notice[data-until]");
+    const t = athensToday();
+    if (!t) return;                                    // leave the static schedule untouched
+    if (notice && notice.dataset.until < t.iso) notice.hidden = true;
+    if (!box) return;
+    box.querySelectorAll(".special-hours li[data-date]").forEach((li) => { li.hidden = li.dataset.date < t.iso; });
+    const sp = box.querySelector(".special-hours"); if (sp && !sp.querySelector("li:not([hidden])")) sp.hidden = true;
+    const tables = [...box.querySelectorAll("table[data-season]")];
+    const inSeason = (v) => { const [a, b] = v.split("|"); return a <= b ? t.md >= a && t.md <= b : t.md >= a || t.md <= b; };
+    const active = tables.find((tb) => tb.dataset.season !== "base" && inSeason(tb.dataset.season)) || tables.find((tb) => tb.dataset.season === "base");
+    tables.forEach((tb) => tb.toggleAttribute("data-inactive", tb !== active && tables.length > 1));
+    const row = active?.querySelector(`tr[data-dow="${t.dow}"]`);
+    if (row) { row.setAttribute("aria-current", "date"); row.querySelector("th").setAttribute("data-today", L("Today", "Σήμερα")); }
+  }
+
   /* ---------- Click-to-load map (no Google request until asked) ---------- */
   function initMap() {
     document.querySelectorAll("[data-load-map]").forEach((b) => b.addEventListener("click", () => {
@@ -276,7 +303,7 @@
       const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -24px 0px" });
       els.forEach((el) => io.observe(el));
     }
-    initMenu(); initGallery(); initMap();
+    initMenu(); initGallery(); initMap(); initHours();
     const y = document.getElementById("year"); if (y) y.textContent = new Date().getFullYear();
     const warm = () => document.querySelectorAll(".links a, .lang-link").forEach((a) => { const u = internal(a); if (u && u.pathname !== location.pathname) load(u.pathname).catch(() => {}); });
     // Warm likely next pages only after this page has fully loaded, so it never competes with first paint.

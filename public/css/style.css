@@ -375,6 +375,7 @@ mark { background: color-mix(in srgb, var(--clay) 25%, transparent); color: inhe
   .step:nth-child(even) { margin-top: 32px; }
   .mi-list { grid-template-columns: minmax(0, 1fr); }
   .cta-band { grid-template-columns: 1fr; }
+  .map { aspect-ratio: 16 / 9; }
   .cta-band .actions { justify-content: flex-start; }
 }
 @media (max-width: 760px) {
@@ -427,3 +428,14 @@ mark { background: color-mix(in srgb, var(--clay) 25%, transparent); color: inhe
 .allergen-list li { padding: 2px 0; }
 .mi-allergens { font-size: .85rem; color: var(--clay); margin-top: 2px; }
 .menu-notes a { border-bottom: 1px solid var(--line-strong); }
+
+/* Opening hours */
+.hours-wrap { display: grid; gap: var(--s4); }
+.hours caption { text-align: left; font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; }
+.hours tr[aria-current="date"] th, .hours tr[aria-current="date"] td { font-weight: 600; color: var(--ink); }
+.hours tr[aria-current="date"] th::after { content: attr(data-today); margin-left: 8px; font-size: .72rem; font-weight: 500; color: var(--clay); }
+.hours[data-inactive] { opacity: .65; }
+.hours-notice { padding: 10px 14px; border-radius: var(--r-sm); background: var(--accent-fill); color: var(--on-accent); margin-bottom: var(--s2); }
+.special-h { font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.special-hours li { display: flex; justify-content: space-between; gap: var(--s3); padding: 4px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+.special-hours li[hidden] { display: none; }

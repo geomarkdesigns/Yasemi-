@@ -19,7 +19,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:The_upper_part_of_Mnisikleous_Street_on_September_30,_2019.jpg",
-  "title": "File:The upper part of Mnisikleous Street on September 30, 2019.jpg"
+  "title": "File:The upper part of Mnisikleous Street on September 30, 2019.jpg",
+  "origin": "licensed"
  },
  "about": {
   "base": "plaka-stepped-lane-cafe-tables",
@@ -41,7 +42,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Πλάκα_6166.jpg",
-  "title": "File:Πλάκα 6166.jpg"
+  "title": "File:Πλάκα 6166.jpg",
+  "origin": "licensed"
  },
  "evening-1": {
   "base": "mnisikleous-street-night-lanterns",
@@ -63,7 +65,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Mnisikleous_Street_at_night_on_June_23,_2024.jpg",
-  "title": "File:Mnisikleous Street at night on June 23, 2024.jpg"
+  "title": "File:Mnisikleous Street at night on June 23, 2024.jpg",
+  "origin": "licensed"
  },
  "evening-2": {
   "base": "mnisikleous-street-summer-night-plaka",
@@ -85,7 +88,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:On_Mnisikleous_street_at_night_on_July_4,_2024.jpg",
-  "title": "File:On Mnisikleous street at night on July 4, 2024.jpg"
+  "title": "File:On Mnisikleous street at night on July 4, 2024.jpg",
+  "origin": "licensed"
  },
  "street-1": {
   "base": "mnisikleous-street-morning-umbrellas",
@@ -107,7 +111,8 @@
   "license": "CC BY 4.0",
   "licurl": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Restaurants_on_Mnisikleous_Street_in_Athens,_20240601_0917_0009.jpg",
-  "title": "File:Restaurants on Mnisikleous Street in Athens, 20240601 0917 0009.jpg"
+  "title": "File:Restaurants on Mnisikleous Street in Athens, 20240601 0917 0009.jpg",
+  "origin": "licensed"
  },
  "street-2": {
   "base": "mnisikleous-street-lunch-plaka",
@@ -129,7 +134,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Rue_Mnisikléous_-_Athènes_(GRA1)_-_2022-03-26_-_1.jpg",
-  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 1.jpg"
+  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 1.jpg",
+  "origin": "licensed"
  },
  "street-3": {
   "base": "mnisikleous-street-busy-afternoon",
@@ -151,7 +157,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Rue_Mnisikléous_-_Athènes_(GRA1)_-_2022-03-26_-_2.jpg",
-  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 2.jpg"
+  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 2.jpg",
+  "origin": "licensed"
  },
  "plaka-1": {
   "base": "plaka-steps-evening-tables",
@@ -173,7 +180,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Αναφιωτικα.jpg",
-  "title": "File:Αναφιωτικα.jpg"
+  "title": "File:Αναφιωτικα.jpg",
+  "origin": "licensed"
  },
  "sig-coffee": {
   "base": "greek-coffee-copper-briki",
@@ -195,7 +203,8 @@
   "license": "CC BY-SA 3.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Türk_Kahvesi_-_Bakir_Cezve.jpg",
-  "title": "File:Türk Kahvesi - Bakir Cezve.jpg"
+  "title": "File:Türk Kahvesi - Bakir Cezve.jpg",
+  "origin": "licensed"
  },
  "coffee-2": {
   "base": "greek-style-coffee-glass-of-water",
@@ -217,7 +226,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Turkish_coffee_in_a_traditional_design_cup.jpg",
-  "title": "File:Turkish coffee in a traditional design cup.jpg"
+  "title": "File:Turkish coffee in a traditional design cup.jpg",
+  "origin": "licensed"
  },
  "sig-sweet": {
   "base": "portokalopita-greek-orange-cake",
@@ -239,7 +249,8 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Portokalopita1.jpg",
-  "title": "File:Portokalopita1.jpg"
+  "title": "File:Portokalopita1.jpg",
+  "origin": "licensed"
  },
  "sig-pie": {
   "base": "spanakopita-greek-spinach-pie",
@@ -260,6 +271,7 @@
   "license": "CC BY-SA 2.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/2.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Spanakopita.jpg",
-  "title": "File:Spanakopita.jpg"
+  "title": "File:Spanakopita.jpg",
+  "origin": "licensed"
  }
 }

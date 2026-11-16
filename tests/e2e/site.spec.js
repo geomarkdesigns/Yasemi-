@@ -2,6 +2,9 @@
 const { test, expect } = require("@playwright/test");
 const AxeBuilder = require("@axe-core/playwright").default;
 
+// On the gated production site, keep the session during a test (closing/leaving pages signs out by design).
+test.beforeEach(async ({ context }) => { if (process.env.BASE_URL) await context.route("**/__logout", (r) => r.abort()); });
+
 const PAGES = ["/", "/menu", "/photos", "/visit", "/privacy", "/el", "/el/menu", "/el/photos", "/el/visit", "/el/privacy"];
 
 /** Collect console errors and any request leaving our origin. */
@@ -38,6 +41,7 @@ test.describe("routes & metadata", () => {
   }
 
   test("unknown route returns the 404 page", async ({ page }) => {
+    test.fail(!!process.env.BASE_URL, "Known defect: the interim jsDelivr proxy serves jsDelivr's 404 text, not ours (fixed by Vercel Git integration).");
     const res = await page.goto("/does-not-exist");
     expect(res?.status()).toBe(404);
     await expect(page.locator("h1")).toContainText("Lost on the steps");

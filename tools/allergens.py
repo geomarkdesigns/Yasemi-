@@ -2,7 +2,7 @@
 """Allergen declarations: export a form for the kitchen, import the completed form.
 
     python3 tools/allergens.py export            # writes docs/allergen-form.csv
-    python3 tools/allergens.py import FILE.csv   # updates content/menu.json
+    python3 tools/allergens.py import FILE.csv --by "Name, role"   # updates content/menu.json
 
 Rules (nothing is ever inferred from a dish name):
   * A row left completely blank keeps that dish as "not confirmed" (allergens: null).
@@ -56,7 +56,7 @@ def parse(rows):
     return result, errors
 
 
-def import_csv(path):
+def import_csv(path, by=None):
     menu = json.loads(MENU_PATH.read_text(encoding="utf-8"))
     with open(path, newline="", encoding="utf-8-sig") as f:
         data, errors = parse(csv.DictReader(f))
@@ -69,6 +69,10 @@ def import_csv(path):
         for it in s["items"]:
             if it["id"] in data and data[it["id"]] != it.get("allergens"):
                 it["allergens"] = data[it["id"]]; changed += 1
+    if not by:
+        raise SystemExit("Say who declared the allergens: --by \"Name, role\" (kept as a record).")
+    import datetime
+    menu["allergenDeclaration"] = {"by": by, "date": datetime.date.today().isoformat(), "_comment": menu.get("allergenDeclaration", {}).get("_comment", "")}
     validate_menu(menu)
     MENU_PATH.write_text(json.dumps(menu, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     confirmed = sum(1 for s in menu["sections"] for i in s["items"] if i.get("allergens") is not None)
@@ -78,7 +82,8 @@ def import_csv(path):
 if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "export":
         print("wrote", export())
-    elif len(sys.argv) == 3 and sys.argv[1] == "import":
-        import_csv(sys.argv[2])
+    elif len(sys.argv) >= 3 and sys.argv[1] == "import":
+        by = sys.argv[sys.argv.index("--by") + 1] if "--by" in sys.argv else None
+        import_csv(sys.argv[2], by)
     else:
         sys.exit(__doc__)

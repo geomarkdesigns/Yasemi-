@@ -115,7 +115,7 @@ class RealContent(unittest.TestCase):
 
     def test_unknown_facts_stay_null(self):
         # These must only be filled with information confirmed by the café.
-        for key in ("openingHours", "geo", "email"):
+        for key in ("hours", "geo", "email"):
             self.assertIn(key, self.site)
         self.assertTrue(self.site["phone"].startswith("+30"))
 

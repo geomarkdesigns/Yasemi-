@@ -16,8 +16,13 @@
   "email": null,
   "officialWebsite": "https://www.yiasemi.gr/",
   "instagram": "https://www.instagram.com/yiasemi_bistrot",
-  "openingHours": null,
-  "specialHours": [],
+  "hours": {
+    "_comment": "Fill ONLY with hours confirmed by the café. weekly: [{days:[0..6 Mon-Sun], opens:'HH:MM', closes:'HH:MM'}]; seasons: [{name:{en,el}, from:'MM-DD', to:'MM-DD', weekly:[...]}]; special: [{date:'YYYY-MM-DD', closed:true, note:{en,el}}] or with opens/closes; notice: {en, el, until:'YYYY-MM-DD'} for temporary closures.",
+    "weekly": null,
+    "seasons": [],
+    "special": [],
+    "notice": null
+  },
   "notice": null,
   "menuSource": {
     "url": "https://www.yiasemi.gr/menu",

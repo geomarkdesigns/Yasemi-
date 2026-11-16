@@ -12,7 +12,7 @@ Interface copy lives below as (English, Greek) pairs.
 """
 import base64, datetime, hashlib, json, pathlib, sys
 from sitegen.core import (esc, pick, url as _url, abs_url as _abs, fmt_price, DIETS, ALLERGENS, allergen_text,
-                          validate_menu, hours_rows, opening_hours_ld, maps_links)
+                          validate_menu, maps_links, validate_hours, has_hours, week_rows, hours_ld_full, gallery_order)
 
 ROOT = pathlib.Path(__file__).parent
 OUT = ROOT / "public"
@@ -42,6 +42,7 @@ def abs_url(path, lang=None): return _abs(BASE, path, lang or LANG)
 def ver(rel): return hashlib.sha1((OUT / rel).read_bytes()).hexdigest()[:8]
 
 A = SITE["address"]
+HOURS = validate_hours(SITE.get("hours"))
 NAME = SITE["name"]
 PHONE, PHONE_TXT = SITE["phone"], SITE["phoneDisplay"]
 MAPS = maps_links("Yiasemi", A["street"]["en"], A["postalCode"], A["city"]["en"])
@@ -90,6 +91,8 @@ def pic(pid, cls="", color="c-stone", sizes="100vw", eager=False, extra="", cap=
 def credit(pid):
     p = PHOTOS.get(pid)
     if not p: return ""
+    if p.get("origin") == "yiasemi":
+        return f'{T("Photo", "Φωτογραφία")}: © Yiasemi'
     return f'{T("Photo", "Φωτογραφία")}: {esc(p["author"])} · {esc(p["license"])}'
 
 def img_abs(pid, w=None):
@@ -116,8 +119,8 @@ def cafe_ld():
          "sameAs": [u for u in (SITE.get("instagram"), SITE.get("officialWebsite")) if u]}
     if SITE.get("geo"):
         d["geo"] = {"@type": "GeoCoordinates", "latitude": SITE["geo"]["lat"], "longitude": SITE["geo"]["lng"]}
-    if SITE.get("openingHours"):
-        d["openingHoursSpecification"] = opening_hours_ld(SITE["openingHours"])
+    if has_hours(HOURS):
+        d["openingHoursSpecification"] = hours_ld_full(HOURS, datetime.date.today())
     if SITE.get("email"):
         d["email"] = SITE["email"]
     return {k: v for k, v in d.items() if v is not None}
@@ -162,7 +165,7 @@ def head(path, title, desc, ld, og_img=None, noindex=False):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <meta name="robots" content="{robots}">
-<link rel="canonical" href="{abs_url(path)}">
+{"" if path == "404" else f'<link rel="canonical" href="{abs_url(path)}">'}
 {alts}<meta name="theme-color" content="#f6f0e6">
 <meta name="format-detection" content="telephone=yes">
 <meta property="og:type" content="website">
@@ -195,7 +198,7 @@ def head(path, title, desc, ld, og_img=None, noindex=False):
     <a href="{url("")}" class="logo">{jasmine()}<span>{T("Yiasemi", "Γιασεμί")}</span></a>
     <ul class="links" id="site-links">{nav}</ul>
     <div class="controls">
-      <a class="pill-btn lang-link" href="{url(path, other)}" hreflang="{other}" lang="{other}" aria-label="{"EN, read in English" if other == "en" else "ΕΛ, διαβάστε στα Ελληνικά"}">{"EN" if other == "en" else "ΕΛ"}</a>
+      <a class="pill-btn lang-link" href="{url("" if path == "404" else path, other)}" hreflang="{other}" lang="{other}" aria-label="{"EN, read in English" if other == "en" else "ΕΛ, διαβάστε στα Ελληνικά"}">{"EN" if other == "en" else "ΕΛ"}</a>
       <button class="pill-btn" id="theme-toggle" type="button" aria-pressed="false" aria-label="{T("Dark mode", "Σκοτεινή λειτουργία")}">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -271,11 +274,47 @@ def directions_buttons(primary=True):
   <a class="btn btn-ghost" href="tel:{PHONE}">{ICON["phone"]}{T("Call", "Κλήση")} {PHONE_TXT}</a>
 </div>'''
 
+def _fmt_md(md):
+    m, d = md.split("-")
+    months = {"en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+              "el": ["Ιαν", "Φεβ", "Μαρ", "Απρ", "Μαΐ", "Ιουν", "Ιουλ", "Αυγ", "Σεπ", "Οκτ", "Νοε", "Δεκ"]}[LANG]
+    return f"{int(d)} {months[int(m) - 1]}"
+
+def _week_table(spans, caption, attrs=""):
+    rows = "".join(f'<tr data-dow="{i}"><th scope="row">{d}</th><td>{h}</td></tr>' for i, (d, h) in enumerate(week_rows(spans, LANG)))
+    return f'<table class="hours"{attrs}><caption>{caption}</caption><tbody>{rows}</tbody></table>'
+
+def hours_notice():
+    n = HOURS.get("notice")
+    if not n or (n.get("until") and n["until"] < TODAY):
+        return ""
+    until = f' data-until="{n["until"]}"' if n.get("until") else ""
+    return f'<p class="hours-notice" role="status"{until}>{esc(P(n))}</p>'
+
 def hours_block():
-    rows = hours_rows(SITE.get("openingHours"), LANG)
-    if not rows:
-        return f'<p>{T("Opening hours are not published yet. Please call before you visit.", "Το ωράριο δεν έχει δημοσιευτεί ακόμη. Παρακαλούμε τηλεφωνήστε πριν έρθετε.")}</p>'
-    return '<table class="hours"><tbody>' + "".join(f"<tr><th scope=\"row\">{d}</th><td>{h}</td></tr>" for d, h in rows) + "</tbody></table>"
+    """Opening hours from content/site.json only. Today's row is highlighted in Europe/Athens time by main.js."""
+    out = hours_notice()
+    if not has_hours(HOURS):
+        return out + f'<p>{T("Opening hours are not published yet. Please call before you visit.", "Το ωράριο δεν έχει δημοσιευτεί ακόμη. Παρακαλούμε τηλεφωνήστε πριν έρθετε.")}</p>'
+    out += '<div class="hours-wrap" data-hours>'
+    if HOURS["weekly"]:
+        out += _week_table(HOURS["weekly"], T("Regular hours", "Κανονικό ωράριο"), ' data-season="base"')
+    for s in HOURS["seasons"]:
+        cap = f'{esc(P(s["name"]))} · {_fmt_md(s["from"])} – {_fmt_md(s["to"])}'
+        out += _week_table(s["weekly"], cap, f' data-season="{s["from"]}|{s["to"]}"')
+    upcoming = sorted((sp for sp in HOURS["special"] if sp["date"] >= TODAY), key=lambda x: x["date"])
+    if upcoming:
+        lis = ""
+        for sp in upcoming:
+            d = datetime.date.fromisoformat(sp["date"])
+            label = f'{DAY_LABEL[LANG][d.weekday()]} {d.day}/{d.month}/{d.year}'
+            what = T("Closed", "Κλειστά") if sp.get("closed") else f'{sp["opens"]}–{sp["closes"]}'
+            note = f' · {esc(P(sp["note"]))}' if sp.get("note") else ""
+            lis += f'<li data-date="{sp["date"]}"><time datetime="{sp["date"]}">{label}</time><span>{what}{note}</span></li>'
+        out += f'<div class="special-hours"><p class="special-h">{T("Special dates", "Ειδικές ημερομηνίες")}</p><ul>{lis}</ul></div>'
+    return out + "</div>"
+
+DAY_LABEL = {"en": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "el": ["Δευ", "Τρί", "Τετ", "Πέμ", "Παρ", "Σάβ", "Κυρ"]}
 
 def info_dl():
     return f'''<dl class="info-list">
@@ -447,7 +486,7 @@ def home_faqs():
          "Όχι. Η Μνησικλέους είναι σκαλωτός δρόμος και το καφέ βρίσκεται στα μισά της, οπότε η πρόσβαση γίνεται από σκαλιά.")),
       (T("What are the opening hours?", "Ποιο είναι το ωράριο;"),
        T(f"Hours are not published on this site yet. Please call {PHONE_TXT} before you come.",
-         f"Το ωράριο δεν έχει δημοσιευτεί ακόμη. Τηλεφωνήστε στο {PHONE_TXT} πριν έρθετε.") if not SITE.get("openingHours")
+         f"Το ωράριο δεν έχει δημοσιευτεί ακόμη. Τηλεφωνήστε στο {PHONE_TXT} πριν έρθετε.") if not has_hours(HOURS)
        else T("See the Visit page for this week's opening hours.", "Δείτε το ωράριο στη σελίδα Επίσκεψη.")),
     ]
 
@@ -489,6 +528,10 @@ def allergen_box():
         status = T("Allergens are listed only under dishes our kitchen has declared. For any other dish, please ask before ordering.", "Τα αλλεργιογόνα αναγράφονται μόνο στα πιάτα που έχει δηλώσει η κουζίνα μας. Για τα υπόλοιπα, ρωτήστε πριν παραγγείλετε.")
     else:
         status = T("Allergen details for individual dishes are not listed on this website yet.", "Οι πληροφορίες αλλεργιογόνων ανά πιάτο δεν αναγράφονται ακόμη σε αυτόν τον ιστότοπο.")
+    decl = MENU.get("allergenDeclaration") or {}
+    if confirmed and decl.get("date"):
+        d = datetime.date.fromisoformat(decl["date"])
+        status += " " + T(f"Declared by our kitchen on {d.day}/{d.month}/{d.year}.", f"Δήλωση της κουζίνας μας στις {d.day}/{d.month}/{d.year}.")
     lst = "".join(f"<li>{ALLERGENS[a][LANG]}</li>" for a in ALLERGENS)
     return f'''<div class="allergen-box" role="note" aria-labelledby="allergen-h">
     <h2 id="allergen-h" class="allergen-h">{T("Allergies & intolerances", "Αλλεργίες & δυσανεξίες")}</h2>
@@ -587,18 +630,26 @@ def photos():
     title = T("Photos of Mnisikleous Street & Plaka | Yiasemi, Athens", "Φωτογραφίες: Μνησικλέους & Πλάκα | Γιασεμί, Αθήνα")
     desc = T("Photos of Yiasemi's neighbourhood: the steps of Mnisikleous Street, Plaka at night, Greek coffee, pies and desserts.",
              "Φωτογραφίες από τη γειτονιά του Γιασεμιού: τα σκαλιά της Μνησικλέους, η Πλάκα τη νύχτα, ελληνικός καφές, πίτες και γλυκά.")
-    ids = [k for k, v in PHOTOS.items() if v.get("cat")]
+    ids = gallery_order(PHOTOS)                    # authentic Yiasemi photos first
+    own = [k for k in ids if PHOTOS[k].get("origin") == "yiasemi"]
     items, objs = "", []
     for n, k in enumerate(ids):
         p = PHOTOS[k]
         cap = f'{esc(p["alt"][LANG])}<small>{credit(k)}</small>'
-        items += (f'<li class="g-item" data-cat="{p["cat"]}">'
+        items += (f'<li class="g-item" data-cat="{p["cat"]}" data-origin="{p.get("origin", "licensed")}">'
                   f'<button type="button" class="g-open"><span class="sr-only">{T("Open photo", "Άνοιγμα φωτογραφίας")}: </span>'
                   f'{pic(k, "", "c-stone", "(max-width: 760px) 46vw, (max-width: 1100px) 30vw, 380px", eager=("high" if n == 0 else n < 3), cap=cap, full=True, alt_in_caption=True)}</button></li>')
-        objs.append({"@type": "ImageObject", "contentUrl": img_abs(k), "name": p["alt"][LANG], "width": p["w"], "height": p["h"],
-                     "creator": {"@type": "Person", "name": p["author"]}, "creditText": p["author"],
-                     "license": p["licurl"], "acquireLicensePage": p["source"], "copyrightNotice": f'{p["author"]}, {p["license"]}'})
-    fbtn = f'<button type="button" data-filter="all" aria-pressed="true">{T("All", "Όλες")}</button>' + "".join(
+        if p.get("origin") == "yiasemi":
+            objs.append({"@type": "ImageObject", "contentUrl": img_abs(k), "name": p["alt"][LANG], "width": p["w"], "height": p["h"],
+                         "creator": {"@id": f"{BASE}/#cafe"}, "creditText": "Yiasemi", "copyrightNotice": "© Yiasemi"})
+        else:
+            objs.append({"@type": "ImageObject", "contentUrl": img_abs(k), "name": p["alt"][LANG], "width": p["w"], "height": p["h"],
+                         "creator": {"@type": "Person", "name": p["author"]}, "creditText": p["author"],
+                         "license": p["licurl"], "acquireLicensePage": p["source"], "copyrightNotice": f'{p["author"]}, {p["license"]}'})
+    fbtn = f'<button type="button" data-filter="all" aria-pressed="true">{T("All", "Όλες")}</button>'
+    if own:
+        fbtn += f'<button type="button" data-filter="origin:yiasemi" aria-pressed="false">{T("At Yiasemi", "Στο Γιασεμί")}</button>'
+    fbtn += "".join(
         f'<button type="button" data-filter="{k}" aria-pressed="false">{T(*v)}</button>' for k, v in CATS.items() if any(PHOTOS[g]["cat"] == k for g in ids))
     ld = [website_ld(), cafe_ld(),
           {**webpage_ld("photos", title, desc, kind="CollectionPage"), "mainEntity": {"@type": "ImageGallery", "name": T("Photos", "Φωτογραφίες"), "associatedMedia": objs}},
@@ -608,7 +659,7 @@ def photos():
   <p class="eyebrow">{T("Gallery", "Γκαλερί")}</p>
   <h1>{T("More photos", "Περισσότερες φωτογραφίες")}</h1>
   <p class="lead">{T("Yiasemi's corner of Athens: the steps of Mnisikleous, Plaka after dark, and the Greek coffee and homemade sweets it is known for.", "Η γωνιά του Γιασεμιού στην Αθήνα: τα σκαλιά της Μνησικλέους, η Πλάκα τη νύχτα, ο ελληνικός καφές και τα σπιτικά γλυκά.")}</p>
-  <p class="fine">{T("These are openly licensed photos of the street and of Greek dishes, not photos taken inside Yiasemi.", "Πρόκειται για φωτογραφίες ελεύθερης άδειας του δρόμου και ελληνικών πιάτων, όχι φωτογραφίες από το εσωτερικό του Γιασεμιού.")}</p>
+  <p class="fine">{T("Photos marked © Yiasemi were taken at the café. The others are openly licensed photos of the street and of Greek dishes, credited under each photo.", "Οι φωτογραφίες με την ένδειξη © Yiasemi είναι από το καφέ. Οι υπόλοιπες είναι φωτογραφίες ελεύθερης άδειας του δρόμου και ελληνικών πιάτων, με αναφορά δημιουργού.") if own else T("These are openly licensed photos of the street and of Greek dishes, not photos taken inside Yiasemi.", "Πρόκειται για φωτογραφίες ελεύθερης άδειας του δρόμου και ελληνικών πιάτων, όχι φωτογραφίες από το εσωτερικό του Γιασεμιού.")}</p>
 </section>
 <section class="wrap" aria-label="{T("Photo gallery", "Γκαλερί φωτογραφιών")}">
   <div class="filters" role="group" aria-label="{T("Filter photos", "Φίλτρο φωτογραφιών")}">{fbtn}</div>
@@ -712,7 +763,7 @@ def credits():
         f'<div><b>{esc(p["alt"][LANG])}</b><br><span class="muted">{T("Photo", "Φωτογραφία")}: {esc(p["author"])} · '
         f'<a href="{esc(p["licurl"])}" target="_blank" rel="noopener license">{esc(p["license"])}</a> · '
         f'<a href="{esc(p["source"])}" target="_blank" rel="noopener">Wikimedia Commons</a> · {T("resized and cropped", "αλλαγή μεγέθους και περικοπή")}</span></div></li>'
-        for p in PHOTOS.values())
+        for p in PHOTOS.values() if p.get("origin") != "yiasemi")
     ld = [website_ld(), webpage_ld("credits", title, desc), crumbs_ld([(T("Home", "Αρχική"), abs_url("")), (T("Photo credits", "Πηγές φωτογραφιών"), abs_url("credits"))])]
     body = f'''
 <section class="wrap page-head narrow">

@@ -16,7 +16,8 @@
   "alt": {
    "en": "The marble steps of Mnisikleous Street in Plaka, climbing toward the Acropolis rock",
    "el": "Τα μαρμάρινα σκαλιά της οδού Μνησικλέους στην Πλάκα, που ανεβαίνουν προς τον βράχο της Ακρόπολης"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "about",
@@ -35,7 +36,8 @@
   "alt": {
    "en": "Café tables and chairs beside the stone steps of a Plaka lane",
    "el": "Τραπεζάκια καφέ δίπλα στα πέτρινα σκαλιά ενός στενού της Πλάκας"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "evening-1",
@@ -54,7 +56,8 @@
   "alt": {
    "en": "Mnisikleous Street at night, lit by hanging lanterns",
    "el": "Η οδός Μνησικλέους τη νύχτα, φωτισμένη με κρεμαστά φανάρια"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "evening-2",
@@ -73,7 +76,8 @@
   "alt": {
    "en": "A warm summer night on Mnisikleous Street, Plaka",
    "el": "Καλοκαιρινή νύχτα στην οδό Μνησικλέους, στην Πλάκα"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "street-1",
@@ -89,7 +93,8 @@
   "alt": {
    "en": "Morning on Mnisikleous Street: umbrellas, flowers and tables on the steps",
    "el": "Πρωί στη Μνησικλέους: ομπρέλες, λουλούδια και τραπεζάκια στα σκαλιά"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "street-2",
@@ -105,7 +110,8 @@
   "alt": {
    "en": "People enjoying lunch in the sun along Mnisikleous Street",
    "el": "Κόσμος απολαμβάνει φαγητό στον ήλιο στη Μνησικλέους"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "street-3",
@@ -121,7 +127,8 @@
   "alt": {
    "en": "A lively afternoon on the stepped Mnisikleous Street",
    "el": "Ζωντανό απόγευμα στον σκαλωτό δρόμο της Μνησικλέους"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "plaka-1",
@@ -137,7 +144,8 @@
   "alt": {
    "en": "Tables along the stone steps of Plaka in the early evening",
    "el": "Τραπεζάκια στα πέτρινα σκαλιά της Πλάκας νωρίς το βράδυ"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "sig-coffee",
@@ -156,7 +164,8 @@
   "alt": {
    "en": "Coffee poured from a copper briki into a small porcelain cup",
    "el": "Καφές που σερβίρεται από χάλκινο μπρίκι σε μικρό πορσελάνινο φλιτζάνι"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "coffee-2",
@@ -172,7 +181,8 @@
   "alt": {
    "en": "A small cup of foamy coffee served with a glass of water",
    "el": "Μικρό φλιτζάνι καφέ με καϊμάκι και ένα ποτήρι νερό"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "sig-sweet",
@@ -191,7 +201,8 @@
   "alt": {
    "en": "Portokalopita, Greek orange cake, served in slices",
    "el": "Πορτοκαλόπιτα σερβιρισμένη σε κομμάτια"
-  }
+  },
+  "origin": "licensed"
  },
  {
   "id": "sig-pie",
@@ -210,6 +221,7 @@
   "alt": {
    "en": "Golden spanakopita, Greek spinach pie with crisp filo",
    "el": "Χρυσαφένια σπανακόπιτα με τραγανό φύλλο"
-  }
+  },
+  "origin": "licensed"
  }
 ]

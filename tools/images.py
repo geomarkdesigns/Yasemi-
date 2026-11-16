@@ -55,9 +55,17 @@ def main():
     CACHE.mkdir(parents=True, exist_ok=True); OUT.mkdir(parents=True, exist_ok=True)
     manifest = {}
     for c in CONFIG:
-        src = CACHE / f'{c["id"]}.jpg'
-        if not src.exists():
-            print("downloading", c["title"]); fetch(c["title"], src); time.sleep(3)
+        if c.get("origin") == "yiasemi":
+            # Authentic photo supplied by the café: content/photos/<id>.jpg, used only once approved.
+            if not c.get("approved"):
+                print(f'skip {c["id"]}: owner photo not marked "approved": true'); continue
+            src = ROOT / "content/photos" / c["file"]
+            if not src.exists():
+                raise SystemExit(f'missing owner photo {src}')
+        else:
+            src = CACHE / f'{c["id"]}.jpg'
+            if not src.exists():
+                print("downloading", c["title"]); fetch(c["title"], src); time.sleep(3)
         im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
         im = crop(im, c.get("aspect"), c.get("focal"))
         widths = sorted({w for w in WIDTHS if w < im.width} | {min(im.width, WIDTHS[-1])})
@@ -69,7 +77,8 @@ def main():
         big = widths[-1]
         manifest[c["id"]] = {"base": c["base"], "widths": widths, "w": big, "h": round(im.height * big / im.width),
                              "alt": c["alt"], "cat": c.get("cat"), "author": c["author"], "license": c["license"],
-                             "licurl": c["licurl"], "source": c["source"], "title": c["title"]}
+                             "licurl": c.get("licurl", ""), "source": c.get("source", ""), "title": c.get("title", ""),
+                             "origin": c.get("origin", "licensed")}
         print(f'{c["id"]:11s} {im.width}x{im.height} -> {widths}')
     # Open Graph / social share image, exactly 1200x630
     og_src = CACHE / "plaka-1.jpg"

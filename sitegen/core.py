@@ -157,3 +157,115 @@ def maps_links(name, street, postal, city):
         "apple": "https://maps.apple.com/?daddr=" + quote(q) + "&dirflg=w",
         "embed": "https://www.google.com/maps?q=" + quote(q) + "&z=17&output=embed",
     }
+
+
+# ------------------------------------------------------------------ opening hours
+# site.json "hours":
+#   weekly:  [{"days":[0..6], "opens":"09:00", "closes":"19:00"}]            (0 = Monday) or null = unknown
+#   seasons: [{"name":{en,el}, "from":"MM-DD", "to":"MM-DD", "weekly":[...]}] (may wrap the year end)
+#   special: [{"date":"YYYY-MM-DD", "closed":true, "note":{en,el}}  or  {"date":..., "opens":..., "closes":..., "note":...}]
+#   notice:  null or {"en":..., "el":..., "until":"YYYY-MM-DD"}            (temporary message)
+import datetime as _dt
+import re as _re
+
+_TIME = _re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+DAY_NAMES = {"en": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+             "el": ["Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο", "Κυριακή"]}
+SCHEMA_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+def _check_spans(spans, where):
+    if spans is None:
+        return
+    if not isinstance(spans, list):
+        raise ValueError(f"{where}: must be a list")
+    for s in spans:
+        if not s.get("days") or any(d not in range(7) for d in s["days"]):
+            raise ValueError(f"{where}: days must be 0-6 (Mon-Sun)")
+        for k in ("opens", "closes"):
+            if not _TIME.match(str(s.get(k, ""))):
+                raise ValueError(f"{where}: {k} must be HH:MM")
+
+
+def validate_hours(h):
+    """Validate the hours block; returns it normalised (missing keys filled)."""
+    h = dict(h or {})
+    h.setdefault("weekly", None); h.setdefault("seasons", []); h.setdefault("special", []); h.setdefault("notice", None)
+    _check_spans(h["weekly"], "hours.weekly")
+    for s in h["seasons"]:
+        for k in ("from", "to"):
+            _dt.datetime.strptime("2000-" + s[k], "%Y-%m-%d")
+        _check_spans(s["weekly"], f"season {s['from']}..{s['to']}")
+    for sp in h["special"]:
+        _dt.date.fromisoformat(sp["date"])
+        if not sp.get("closed"):
+            _check_spans([{"days": [0], "opens": sp.get("opens"), "closes": sp.get("closes")}], f"special {sp['date']}")
+    if h["notice"] and h["notice"].get("until"):
+        _dt.date.fromisoformat(h["notice"]["until"])
+    return h
+
+
+def has_hours(h):
+    h = validate_hours(h)
+    return bool(h["weekly"] or h["seasons"])
+
+
+def _in_season(season, d):
+    md = d.strftime("%m-%d")
+    a, b = season["from"], season["to"]
+    return a <= md <= b if a <= b else (md >= a or md <= b)      # wraps the new year
+
+
+def weekly_for(h, d):
+    h = validate_hours(h)
+    for s in h["seasons"]:
+        if _in_season(s, d):
+            return s["weekly"]
+    return h["weekly"]
+
+
+def hours_on(h, d):
+    """('closed', note) | ('open', ['09:00–19:00', ...], note) | ('unknown', None) for a date."""
+    h = validate_hours(h)
+    for sp in h["special"]:
+        if sp["date"] == d.isoformat():
+            note = sp.get("note")
+            return ("closed", note) if sp.get("closed") else ("open", [f'{sp["opens"]}–{sp["closes"]}'], note)
+    w = weekly_for(h, d)
+    if w is None:
+        return ("unknown", None)
+    spans = [f'{s["opens"]}–{s["closes"]}' for s in w if d.weekday() in s["days"]]
+    return ("open", spans, None) if spans else ("closed", None)
+
+
+def week_rows(spans, lang):
+    closed = {"en": "Closed", "el": "Κλειστά"}[lang]
+    return [(DAY_NAMES[lang][d], ", ".join(f'{s["opens"]}–{s["closes"]}' for s in spans if d in s["days"]) or closed) for d in range(7)]
+
+
+def hours_ld_full(h, today):
+    """schema.org OpeningHoursSpecification incl. seasonal validity and special days (next 12 months)."""
+    h = validate_hours(h)
+    out = [{"@type": "OpeningHoursSpecification", "dayOfWeek": [SCHEMA_DAYS[d] for d in s["days"]], "opens": s["opens"], "closes": s["closes"]}
+           for s in (h["weekly"] or [])]
+    for season in h["seasons"]:
+        for year in (today.year, today.year + 1):
+            start = _dt.date.fromisoformat(f"{year}-{season['from']}")
+            end = _dt.date.fromisoformat(f"{year if season['from'] <= season['to'] else year + 1}-{season['to']}")
+            if end < today:
+                continue
+            out += [{"@type": "OpeningHoursSpecification", "dayOfWeek": [SCHEMA_DAYS[d] for d in s["days"]], "opens": s["opens"], "closes": s["closes"],
+                     "validFrom": start.isoformat(), "validThrough": end.isoformat()} for s in season["weekly"]]
+    for sp in h["special"]:
+        d = _dt.date.fromisoformat(sp["date"])
+        if today <= d <= today + _dt.timedelta(days=366):
+            o, c = ("00:00", "00:00") if sp.get("closed") else (sp["opens"], sp["closes"])
+            out.append({"@type": "OpeningHoursSpecification", "opens": o, "closes": c, "validFrom": sp["date"], "validThrough": sp["date"]})
+    return out
+
+
+# ------------------------------------------------------------------ gallery
+def gallery_order(photos):
+    """Authentic Yiasemi photos first (in config order), then licensed photos."""
+    ids = [k for k, v in photos.items() if v.get("cat")]
+    return [k for k in ids if photos[k].get("origin") == "yiasemi"] + [k for k in ids if photos[k].get("origin") != "yiasemi"]
