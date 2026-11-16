@@ -30,3 +30,9 @@ npm run serve             # local preview at http://127.0.0.1:8765
 
 ## Editing the menu
 Edit `content/menu.json`: each item has `name.en`/`name.el`, optional `desc`, `price` (number, e.g. `6.5`) or `prices` (sizes), and `diet` (`"vegetarian"`, `"vegan"` or `null`). Only add a dietary label the kitchen has confirmed. Run `python3 build.py && npm test`, then push.
+
+## Pre-launch access gate
+Until the café approves going live, every URL (pages, images, sitemap, robots.txt) answers **401** with a code form, plus `X-Robots-Tag: noindex`.
+- `deploy/middleware.js`: the gate (Vercel Routing Middleware, runs before anything is served). The code is **not** in the repo. It is the `ACCESS_CODE` environment variable (type *sensitive*) on the Vercel project. Change the code by changing that variable and redeploying.
+- After entering the code, a secure HttpOnly cookie keeps you signed in for 30 days. `/__logout` signs out.
+- **To go live:** deploy without `middleware.js` and remove the `X-Robots-Tag` header (see `deploy/vercel.proxy.json`).
