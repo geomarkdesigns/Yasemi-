@@ -175,10 +175,12 @@ test.describe("gallery", () => {
   test("lightbox supports swipe", async ({ page }) => {
     await page.goto("/photos");
     await page.locator(".g-open").first().click();
-    const box = await page.locator(".lb-stage").boundingBox();
-    await page.locator(".lb-stage").dispatchEvent("pointerdown", { clientX: box.x + box.width * 0.8, clientY: box.y + 50 });
-    await page.locator(".lb-stage").dispatchEvent("pointerup", { clientX: box.x + box.width * 0.2, clientY: box.y + 55 });
+    // swipe immediately, while the full-size photo may still be loading (the real-world case)
+    const vw = page.viewportSize().width;
+    await page.locator(".lb-stage").dispatchEvent("pointerdown", { clientX: vw * 0.8, clientY: 300 });
+    await page.locator(".lb-stage").dispatchEvent("pointerup", { clientX: vw * 0.2, clientY: 305 });
     await expect(page.locator(".lb-count")).toHaveText(/^2 \//);
+    await expect(page.locator(".lightbox")).toBeVisible();   // a swipe must not close the viewer
   });
 });
 

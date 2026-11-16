@@ -219,7 +219,7 @@
     el.querySelector(".lb-close").addEventListener("click", close);
     el.querySelector(".lb-prev").addEventListener("click", () => show(idx - 1));
     el.querySelector(".lb-next").addEventListener("click", () => show(idx + 1));
-    el.addEventListener("click", (e) => { if (e.target === el) close(); });
+    el.addEventListener("click", (e) => { if (swiped) { swiped = false; return; } if (e.target === el) close(); });
     el.addEventListener("keydown", (e) => {
       if (e.key === "Escape") { e.preventDefault(); close(); }
       else if (e.key === "ArrowLeft") show(idx - 1);
@@ -230,12 +230,13 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
-    let sx = null, sy = null;                                       // swipe
-    stage.addEventListener("pointerdown", (e) => { sx = e.clientX; sy = e.clientY; });
-    stage.addEventListener("pointerup", (e) => {
+    let sx = null, sy = null, swiped = false;                       // swipe anywhere in the viewer (not only on the image)
+    el.addEventListener("pointerdown", (e) => { if (e.target.closest(".lb-btn")) return; sx = e.clientX; sy = e.clientY; swiped = false; });
+    el.addEventListener("pointerup", (e) => {
       if (sx === null) return; const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) show(idx + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { swiped = true; show(idx + (dx < 0 ? 1 : -1)); }
     });
+    el.addEventListener("pointercancel", () => { sx = null; });
     lb = { el, close };
   }
 
