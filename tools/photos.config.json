@@ -1,0 +1,215 @@
+[
+ {
+  "id": "hero",
+  "title": "File:The upper part of Mnisikleous Street on September 30, 2019.jpg",
+  "author": "George E. Koronaios",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:The_upper_part_of_Mnisikleous_Street_on_September_30,_2019.jpg",
+  "aspect": "3:4",
+  "focal": [
+   0.5,
+   0.55
+  ],
+  "cat": "street",
+  "base": "mnisikleous-street-steps-plaka-athens",
+  "alt": {
+   "en": "The marble steps of Mnisikleous Street in Plaka, climbing toward the Acropolis rock",
+   "el": "Τα μαρμάρινα σκαλιά της οδού Μνησικλέους στην Πλάκα, που ανεβαίνουν προς τον βράχο της Ακρόπολης"
+  }
+ },
+ {
+  "id": "about",
+  "title": "File:Πλάκα 6166.jpg",
+  "author": "C messier",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Πλάκα_6166.jpg",
+  "aspect": "4:5",
+  "focal": [
+   0.5,
+   0.5
+  ],
+  "cat": "street",
+  "base": "plaka-stepped-lane-cafe-tables",
+  "alt": {
+   "en": "Café tables and chairs beside the stone steps of a Plaka lane",
+   "el": "Τραπεζάκια καφέ δίπλα στα πέτρινα σκαλιά ενός στενού της Πλάκας"
+  }
+ },
+ {
+  "id": "evening-1",
+  "title": "File:Mnisikleous Street at night on June 23, 2024.jpg",
+  "author": "George E. Koronaios",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Mnisikleous_Street_at_night_on_June_23,_2024.jpg",
+  "aspect": "4:5",
+  "focal": [
+   0.5,
+   0.5
+  ],
+  "cat": "evening",
+  "base": "mnisikleous-street-night-lanterns",
+  "alt": {
+   "en": "Mnisikleous Street at night, lit by hanging lanterns",
+   "el": "Η οδός Μνησικλέους τη νύχτα, φωτισμένη με κρεμαστά φανάρια"
+  }
+ },
+ {
+  "id": "evening-2",
+  "title": "File:On Mnisikleous street at night on July 4, 2024.jpg",
+  "author": "George E. Koronaios",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:On_Mnisikleous_street_at_night_on_July_4,_2024.jpg",
+  "aspect": "3:4",
+  "focal": [
+   0.5,
+   0.6
+  ],
+  "cat": "evening",
+  "base": "mnisikleous-street-summer-night-plaka",
+  "alt": {
+   "en": "A warm summer night on Mnisikleous Street, Plaka",
+   "el": "Καλοκαιρινή νύχτα στην οδό Μνησικλέους, στην Πλάκα"
+  }
+ },
+ {
+  "id": "street-1",
+  "title": "File:Restaurants on Mnisikleous Street in Athens, 20240601 0917 0009.jpg",
+  "author": "Jakub Hałun",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Restaurants_on_Mnisikleous_Street_in_Athens,_20240601_0917_0009.jpg",
+  "aspect": null,
+  "focal": null,
+  "cat": "street",
+  "base": "mnisikleous-street-morning-umbrellas",
+  "alt": {
+   "en": "Morning on Mnisikleous Street: umbrellas, flowers and tables on the steps",
+   "el": "Πρωί στη Μνησικλέους: ομπρέλες, λουλούδια και τραπεζάκια στα σκαλιά"
+  }
+ },
+ {
+  "id": "street-2",
+  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 1.jpg",
+  "author": "Chabe01",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Rue_Mnisikléous_-_Athènes_(GRA1)_-_2022-03-26_-_1.jpg",
+  "aspect": null,
+  "focal": null,
+  "cat": "street",
+  "base": "mnisikleous-street-lunch-plaka",
+  "alt": {
+   "en": "People enjoying lunch in the sun along Mnisikleous Street",
+   "el": "Κόσμος απολαμβάνει φαγητό στον ήλιο στη Μνησικλέους"
+  }
+ },
+ {
+  "id": "street-3",
+  "title": "File:Rue Mnisikléous - Athènes (GRA1) - 2022-03-26 - 2.jpg",
+  "author": "Chabe01",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Rue_Mnisikléous_-_Athènes_(GRA1)_-_2022-03-26_-_2.jpg",
+  "aspect": null,
+  "focal": null,
+  "cat": "street",
+  "base": "mnisikleous-street-busy-afternoon",
+  "alt": {
+   "en": "A lively afternoon on the stepped Mnisikleous Street",
+   "el": "Ζωντανό απόγευμα στον σκαλωτό δρόμο της Μνησικλέους"
+  }
+ },
+ {
+  "id": "plaka-1",
+  "title": "File:Αναφιωτικα.jpg",
+  "author": "Hiotisd",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Αναφιωτικα.jpg",
+  "aspect": null,
+  "focal": null,
+  "cat": "plaka",
+  "base": "plaka-steps-evening-tables",
+  "alt": {
+   "en": "Tables along the stone steps of Plaka in the early evening",
+   "el": "Τραπεζάκια στα πέτρινα σκαλιά της Πλάκας νωρίς το βράδυ"
+  }
+ },
+ {
+  "id": "sig-coffee",
+  "title": "File:Türk Kahvesi - Bakir Cezve.jpg",
+  "author": "Eaeeae",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Türk_Kahvesi_-_Bakir_Cezve.jpg",
+  "aspect": "3:4",
+  "focal": [
+   0.55,
+   0.5
+  ],
+  "cat": "taste",
+  "base": "greek-coffee-copper-briki",
+  "alt": {
+   "en": "Coffee poured from a copper briki into a small porcelain cup",
+   "el": "Καφές που σερβίρεται από χάλκινο μπρίκι σε μικρό πορσελάνινο φλιτζάνι"
+  }
+ },
+ {
+  "id": "coffee-2",
+  "title": "File:Turkish coffee in a traditional design cup.jpg",
+  "author": "Garrett Ziegler",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Turkish_coffee_in_a_traditional_design_cup.jpg",
+  "aspect": null,
+  "focal": null,
+  "cat": "taste",
+  "base": "greek-style-coffee-glass-of-water",
+  "alt": {
+   "en": "A small cup of foamy coffee served with a glass of water",
+   "el": "Μικρό φλιτζάνι καφέ με καϊμάκι και ένα ποτήρι νερό"
+  }
+ },
+ {
+  "id": "sig-sweet",
+  "title": "File:Portokalopita1.jpg",
+  "author": "El Mono Español",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Portokalopita1.jpg",
+  "aspect": "3:4",
+  "focal": [
+   0.5,
+   0.55
+  ],
+  "cat": "taste",
+  "base": "portokalopita-greek-orange-cake",
+  "alt": {
+   "en": "Portokalopita, Greek orange cake, served in slices",
+   "el": "Πορτοκαλόπιτα σερβιρισμένη σε κομμάτια"
+  }
+ },
+ {
+  "id": "sig-pie",
+  "title": "File:Spanakopita.jpg",
+  "author": "Alpha",
+  "license": "CC BY-SA 2.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Spanakopita.jpg",
+  "aspect": "3:4",
+  "focal": [
+   0.5,
+   0.5
+  ],
+  "cat": "taste",
+  "base": "spanakopita-greek-spinach-pie",
+  "alt": {
+   "en": "Golden spanakopita, Greek spinach pie with crisp filo",
+   "el": "Χρυσαφένια σπανακόπιτα με τραγανό φύλλο"
+  }
+ }
+]

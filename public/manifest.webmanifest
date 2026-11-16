@@ -1,0 +1,28 @@
+{
+ "name": "Yiasemi · Γιασεμί",
+ "short_name": "Yiasemi",
+ "description": "Café on the steps of Mnisikleous, Plaka, Athens",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#f6f0e6",
+ "theme_color": "#5e6e45",
+ "lang": "en",
+ "icons": [
+  {
+   "src": "/images/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/images/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "/images/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
