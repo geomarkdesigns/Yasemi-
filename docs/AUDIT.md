@@ -80,3 +80,9 @@ No secrets, keys or environment variables exist in the project. Headers: CSP `de
 3. Code defect: in-site navigation used `fetch()` with the default cache mode, which accepts a still-fresh cached copy. **Fixed:** `cache: "no-cache"` (forces revalidation; covered by an E2E test).
 
 **Also changed:** removed the unverified "including VAT" claim; added the EU-14 allergen system (`sitegen/core.py`, `tools/allergens.py`, `docs/allergen-form.csv`) with tests; added a menu source line ("as published by Yiasemi on yiasemi.gr").
+
+## 9. Final polish pass (latest)
+**Fixed:** 404 page language link pointed to non-existent `/el/404`; intermittent 503/404 for 1600px JPEGs through the interim CDN after deploys (JPEG fallback capped at 1200px, images/fonts pinned to a stable commit and pre-warmed by `deploy/make_proxy.py --warm`); tablet map placeholder height; two E2E tests that checked the wrong thing on production.
+**Added:** opening-hours system (weekly, seasonal, special dates, temporary notices, today highlighted in Europe/Athens time, schema.org validity); authentic-photo priority in the gallery (`origin`, owner approval, "At Yiasemi" filter, © credit); allergen declaration record (who and when); `docs/menu-approval.csv`; gate-aware production test setup.
+**Verified:** Athens clock absent on all pages (it was already removed; the test enforces it). Greek pages fully translated (scan of text, titles, meta, OG, aria-labels, alt, placeholders, dynamic strings); the remaining Latin text is brand or product names as on the official Greek menu. 145 internal links OK; external links OK (Wikimedia returned 429 rate limits to the checker).
+**Results:** unit 35/35; local E2E 114/114 (9 production-only skipped); production E2E 78/78 (404 test is an expected failure, known proxy limitation); 117 live images/fonts return 200.
