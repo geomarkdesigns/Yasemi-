@@ -1,6 +1,6 @@
 # Yiasemi — Γιασεμί
 
-Website for Yiasemi café, Mnisikleous 23, Plaka, Athens.
+Website for Yiasemi café, Mnisikleous 31, Plaka, Athens.
 It is a static site in English and Greek, deployed on Vercel from the `public/` folder.
 
 | English | Greek |

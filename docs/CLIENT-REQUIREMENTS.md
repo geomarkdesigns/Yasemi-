@@ -3,7 +3,7 @@
 The site shows nothing it cannot verify. Each answer below goes into `content/site.json` or `content/menu.json`. Then run `python3 build.py`.
 
 ## Must confirm before launch
-1. **Is the café open at Mnisikleous 23 now?** Press reports a closure on 31 March 2025, and yiasemi.gr still says "Back to Plaka very soon…". If not yet open, set `notice` in `site.json` (e.g. "Reopening soon") or delay launch.
+1. **Address & status.** The site now uses **Mnisikleous 31** (per client). All public listings (This is Athens, TripAdvisor, Wanderlog) still say no. 23, so update those and the Google Business Profile to match. **Is the café open now?** Press reports a closure on 31 March 2025, and yiasemi.gr still says "Back to Plaka very soon…". If not yet open, set `notice` in `site.json` (e.g. "Reopening soon") or delay launch.
 2. **Menu & prices**: the only published menu (yiasemi.gr/menu) is headed **"Thiseio · Yiasemi Cottage"**. Confirm it is the Plaka menu and prices, or send the Plaka menu.
 3. **Dietary labels to correct on the official menu**:
    - Bacon & cheese tart: printed as *vegetarian* (label withheld on site)

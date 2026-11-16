@@ -15,7 +15,7 @@
 
 | # | Severity | Issue | Files | Status |
 |---|---|---|---|---|
-| 1 | **Critical** | Press (Protothema, iefimerida, Mar 2025) reports the Mnisikleous 23 café **closed**; yiasemi.gr Contact page says "Back to Plaka very soon…". The site advertises it as open. Client states it has reopened. | content | **Open: needs client confirmation** (address kept as instructed) |
+| 1 | **Critical** | Press (Protothema, iefimerida, Mar 2025) reports the Mnisikleous 23 café **closed**; yiasemi.gr Contact page says "Back to Plaka very soon…". The site advertises it as open. Client states it has reopened, at **Mnisikleous 31**. | content | **Open: needs client confirmation**; address updated to no. 31 |
 | 2 | **Critical** | Menu items, descriptions and "€ —" prices were **invented placeholders** | build.py | **Fixed**: replaced with the official menu from yiasemi.gr (90 items, real prices) |
 | 3 | **Critical** | Unverified claims (rakomelo, mastic ice cream, cushions on steps, "made daily", walking minutes, groups) | build.py | **Fixed**: removed or replaced with sourced facts |
 | 4 | **High** | Official menu prints wrong dietary marks: *Bacon & cheese tart* = vegetarian; *Rusk with cheese & olives* = vegan; Greek menu marks *Grilled feta* = vegan | menu.json | **Mitigated**: label withheld / corrected to vegetarian; flagged for client |

@@ -255,7 +255,7 @@ def write(path, content):
 
 # ------------------------------------------------------------ shared blocks
 def map_facade():
-    return f'''<div class="map reveal" data-map="{esc(MAPS["embed"] + ("&hl=el" if LANG == "el" else "&hl=en"))}" data-title="{esc(T("Map of Yiasemi, Mnisikleous 23, Plaka", "Χάρτης: Γιασεμί, Μνησικλέους 23, Πλάκα"))}">
+    return f'''<div class="map reveal" data-map="{esc(MAPS["embed"] + ("&hl=el" if LANG == "el" else "&hl=en"))}" data-title="{esc(T(f"Map of Yiasemi, {P(A['street'])}, Plaka", f"Χάρτης: Γιασεμί, {P(A['street'])}, Πλάκα"))}">
   <div class="map-facade">
     {ICON["pin"]}
     <p><b>{street_line()}</b></p>
@@ -607,10 +607,10 @@ def photos():
 
 # ================================================================ VISIT
 def visit():
-    title = T("Visit Yiasemi | Mnisikleous 23, Plaka, Athens: directions & metro",
-              "Επίσκεψη στο Γιασεμί | Μνησικλέους 23, Πλάκα: οδηγίες & μετρό")
-    desc = T("How to find Yiasemi at Mnisikleous 23, Plaka, Athens: address, phone, Google and Apple Maps directions, nearest metro and what to expect on the stepped street.",
-             "Πώς θα βρείτε το Γιασεμί στη Μνησικλέους 23 στην Πλάκα: διεύθυνση, τηλέφωνο, οδηγίες Google και Apple Maps, πλησιέστερο μετρό και τι να περιμένετε στον σκαλωτό δρόμο.")
+    title = T(f"Visit Yiasemi | {A['street']['en']}, Plaka, Athens: directions & metro",
+              f"Επίσκεψη στο Γιασεμί | {A['street']['el']}, Πλάκα: οδηγίες & μετρό")
+    desc = T(f"How to find Yiasemi at {A['street']['en']}, Plaka, Athens: address, phone, Google and Apple Maps directions, nearest metro and what to expect on the stepped street.",
+             f"Πώς θα βρείτε το Γιασεμί στη {A['street']['el']} στην Πλάκα: διεύθυνση, τηλέφωνο, οδηγίες Google και Apple Maps, πλησιέστερο μετρό και τι να περιμένετε στον σκαλωτό δρόμο.")
     metro = [(("Monastiraki", "Μοναστηράκι"), ("Lines 1 & 3 · closest station", "Γραμμές 1 & 3 · πλησιέστερος σταθμός")),
              (("Syntagma", "Σύνταγμα"), ("Lines 2 & 3", "Γραμμές 2 & 3")),
              (("Akropoli", "Ακρόπολη"), ("Line 2", "Γραμμή 2"))]

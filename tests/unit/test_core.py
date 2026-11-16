@@ -49,8 +49,8 @@ class Helpers(unittest.TestCase):
         self.assertEqual(rows[6], ("Sunday", "Closed"))
 
     def test_maps_links_use_address_not_coordinates(self):
-        m = maps_links("Yiasemi", "Mnisikleous 23", "105 55", "Athens")
-        self.assertIn("Mnisikleous%2023", m["google"])
+        m = maps_links("Yiasemi", "Mnisikleous 31", "105 55", "Athens")
+        self.assertIn("Mnisikleous%2031", m["google"])
         self.assertTrue(m["google"].startswith("https://www.google.com/maps/dir/?api=1&destination="))
         self.assertTrue(m["apple"].startswith("https://maps.apple.com/?daddr="))
 

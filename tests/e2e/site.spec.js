@@ -188,8 +188,8 @@ test.describe("visit & contact", () => {
   test("contact and directions links are correct", async ({ page }) => {
     await page.goto("/visit");
     for (const href of await page.locator('a[href^="tel:"]').evaluateAll((a) => a.map((x) => x.getAttribute("href")))) expect(href).toBe("tel:+302130417937");
-    await expect(page.locator('a[href^="https://www.google.com/maps/dir/"]').first()).toHaveAttribute("href", /Mnisikleous%2023/);
-    await expect(page.locator('a[href^="https://maps.apple.com/"]').first()).toHaveAttribute("href", /Mnisikleous%2023/);
+    await expect(page.locator('a[href^="https://www.google.com/maps/dir/"]').first()).toHaveAttribute("href", /Mnisikleous%2031/);
+    await expect(page.locator('a[href^="https://maps.apple.com/"]').first()).toHaveAttribute("href", /Mnisikleous%2031/);
   });
 
   test("map is not loaded until requested", async ({ page }) => {
