@@ -40,21 +40,28 @@
 
 - `python3 -m unittest discover -s tests/unit`: **17 passed** (URL building, EUR formatting per language, menu validation, dietary-label sanity on real data, opening-hours rendering, map links).
 - `npx playwright test`: **102 passed** (34 tests × desktop Chrome, Pixel 7, 390px touch): every route both languages (status, lang, single h1, title, description, canonical, hreflang, valid JSON-LD, zero console errors, **zero third-party requests**); 404; no placeholder prices or clock; 90 menu items with correctly formatted prices in EN (`€6.50`) and EL (`6,50 €`); search (incl. accent-insensitive Greek); empty state; dietary filters; category nav and scroll-spy; no-reload language switch with back/forward; all nav links; light default and theme persistence; mobile menu with Escape and focus return; gallery filters; lightbox open, keys, swipe, Escape, focus return; tel/Google/Apple directions links; map not loaded until clicked; axe WCAG 2.2 AA in light & dark (0 serious/critical); no horizontal overflow at 320/360/390/430/768/1024/1280/1920px; images load with alt and dimensions; content visible with JS disabled.
+- **Production run** (`BASE_URL=https://yiasemi.vercel.app`, desktop + Pixel 7): 65/68 passed. The 404 test fails as expected (defect #6, the proxy shows jsDelivr's 404 text). One lightbox run failed once on slow image loading and did not reproduce in 41 reruns (36/36 stress run). That run also exposed a real swipe bug (viewer only swipeable on the image while loading), now fixed.
 - **Not tested:** Safari, Firefox, real iOS and Android devices. Only Chromium is installed in this environment, and installing others is not permitted here.
 
 ## 4. Accessibility
 WCAG 2.2 AA target. Automated axe: 0 serious/critical violations across all main pages in both themes. Manual: keyboard order, visible focus ring, skip link, focus moved to `<main>` on page swap, dialog focus trap and return, `aria-current` for page and category, `aria-pressed` on toggles, live-region result counts, reduced-motion respected, 44px+ touch targets. Screen-reader testing on real NVDA/VoiceOver was **not** performed.
 
-## 5. Lighthouse (local build, simulated mobile Moto G / slow 4G; desktop preset)
-| Page | Mobile Perf | LCP | Desktop Perf | A11y | Best pr. | SEO |
-|---|---|---|---|---|---|---|
-| / | 95–96 | 2.8s | 100 | 100 | 100 | 100 |
-| /menu | 99 | 2.0s | 100 | 100 | 100 | 100 |
-| /visit | 100 | 1.7s | 100 | 100 | 100 | 100 |
-| /el | 96 | 2.8s | 100 | 100 | 100 | 100 |
-| /photos | 87–89 | 3.7–4.1s | 99 | 100 | 100 | 100 |
+## 5. Lighthouse
+**Production (https://yiasemi.vercel.app, Lighthouse 12.8.2, simulated Moto G slow 4G / desktop preset):**
 
-CLS is 0 everywhere and TBT ≤ 100ms. The local server sends no compression, so production should score better (measured after deploy in the release notes). Home and Photos are still above the 2.5s LCP target on simulated slow 4G, mainly because of photo weight. Real-user Core Web Vitals data does not exist yet.
+| Page | Mobile perf | Mobile LCP | Desktop perf | A11y | Best pr. | SEO |
+|---|---|---|---|---|---|---|
+| / | 100 | 1.7s | 100 | 100 | 100 | 92–100* |
+| /menu | 100 | 1.5s | 100 | 100 | 100 | 92–100* |
+| /photos | 100 | 1.5s | 100 | 100 | 100 | 100 |
+| /visit | 100 | 1.2s | 100 | 100 | 100 | 100 |
+| /el | 100 | 1.7s | 90 → fixed** | 100 | 100 | 100 |
+
+CLS 0 and TBT ≤ 80ms on all mobile runs.
+\* Lighthouse intermittently could not fetch robots.txt through the jsDelivr proxy (the file itself is valid). This disappears with the Git-connected deployment.
+\*\* Greek-font swap caused CLS 0.20 on desktop `/el`. Fixed with `font-display: optional` plus preloads; local re-test CLS 0.
+
+Local builds without compression measured slower (mobile LCP 2.0–4.1s); production compression explains the difference. Real-user Core Web Vitals data does not exist yet.
 
 ## 6. Security
 No secrets, keys or environment variables exist in the project. Headers: CSP `default-src 'self'` with a sha256-hashed inline theme script, `frame-src` limited to Google Maps, `object-src 'none'`, `frame-ancestors 'self'`; HSTS; `X-Content-Type-Options`; `Referrer-Policy`; `Permissions-Policy`. There are no forms, so there is no input handling, rate limiting or auth surface. `style-src 'unsafe-inline'` is required for inlined critical CSS.
