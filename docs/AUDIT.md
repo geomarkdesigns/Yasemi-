@@ -71,3 +71,12 @@ No secrets, keys or environment variables exist in the project. Headers: CSP `de
 - **Contact form / reservations / group enquiries**: no official email, booking process or approval. The phone is the only verified contact channel.
 - **Cookie banner**: not required. The site sets no cookies and loads no third-party resources until the visitor asks for the map (disclosed in place). Add a consent system **before** any analytics (GA4 needs client approval).
 - **GeoCoordinates / opening hours in schema**: not verified, so omitted. The fields exist and render automatically once filled.
+
+## 8. Incident: "€ —", "Athens time –:–" and "indicative" reported on the live menu (re-investigated)
+**Finding:** the current production deployment does **not** contain any of these (verified with curl and a fresh browser on production; see release check below). They exist only in the build from commit `cfe1b8e` and earlier.
+**Root causes:**
+1. Earlier deployments remain reachable at their own `yiasemi-<hash>-gm-designs.vercel.app` URLs (team-login protected), and they show old code.
+2. During the proxy workaround, some page responses carried jsDelivr's `Cache-Control: max-age=604800`, so a browser could keep showing an old copy for up to 7 days.
+3. Code defect: in-site navigation used `fetch()` with the default cache mode, which accepts a still-fresh cached copy. **Fixed:** `cache: "no-cache"` (forces revalidation; covered by an E2E test).
+
+**Also changed:** removed the unverified "including VAT" claim; added the EU-14 allergen system (`sitegen/core.py`, `tools/allergens.py`, `docs/allergen-form.csv`) with tests; added a menu source line ("as published by Yiasemi on yiasemi.gr").

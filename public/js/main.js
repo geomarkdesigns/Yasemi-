@@ -48,7 +48,7 @@
   }
   function load(path) {
     if (!pages.has(path)) {
-      pages.set(path, fetch(path, { credentials: "same-origin" }).then((r) => {
+      pages.set(path, fetch(path, { credentials: "same-origin", cache: "no-cache" }).then((r) => {   // always revalidate: never show a stale cached page
         if (!r.ok || !(r.headers.get("content-type") || "").includes("html")) throw new Error("HTTP " + r.status);
         return r.text();
       }).catch((e) => { pages.delete(path); throw e; }));

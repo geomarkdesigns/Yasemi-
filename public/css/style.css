@@ -416,3 +416,14 @@ mark { background: color-mix(in srgb, var(--clay) 25%, transparent); color: inhe
   .controls .pill-btn { min-width: 44px; padding: 0 10px; }
   .logo { font-size: 1.3rem; }
 }
+
+/* Allergens */
+.allergen-box { margin: 0 0 var(--s4); padding: var(--s4); border: 1px solid var(--line-strong); border-left: 3px solid var(--clay); border-radius: var(--r-sm); background: var(--paper); }
+.allergen-h { font-family: var(--sans); font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+.allergen-box p { color: var(--muted); font-size: .95rem; }
+.allergen-box b { color: var(--ink); font-weight: 500; }
+.allergen-box summary { cursor: pointer; margin-top: var(--s2); font-size: var(--t-sm); color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
+.allergen-list { columns: 2 200px; margin-top: var(--s2); font-size: var(--t-sm); color: var(--muted); }
+.allergen-list li { padding: 2px 0; }
+.mi-allergens { font-size: .85rem; color: var(--clay); margin-top: 2px; }
+.menu-notes a { border-bottom: 1px solid var(--line-strong); }

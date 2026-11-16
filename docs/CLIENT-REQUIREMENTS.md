@@ -4,13 +4,14 @@ The site shows nothing it cannot verify. Each answer below goes into `content/si
 
 ## Must confirm before launch
 1. **Address & status.** The site now uses **Mnisikleous 31** (per client). All public listings (This is Athens, TripAdvisor, Wanderlog) still say no. 23, so update those and the Google Business Profile to match. **Is the café open now?** Press reports a closure on 31 March 2025, and yiasemi.gr still says "Back to Plaka very soon…". If not yet open, set `notice` in `site.json` (e.g. "Reopening soon") or delay launch.
-2. **Menu & prices**: the only published menu (yiasemi.gr/menu) is headed **"Thiseio · Yiasemi Cottage"**. Confirm it is the Plaka menu and prices, or send the Plaka menu.
+2. **Menu & prices (owner approval needed for all 90 items).** All prices on the site are copied exactly from the menu images on yiasemi.gr; none are placeholders and none are invented. The only published menu (yiasemi.gr/menu) is headed **"Thiseio · Yiasemi Cottage"**. Confirm it is the Plaka menu and prices, or send the Plaka menu.
 3. **Dietary labels to correct on the official menu**:
    - Bacon & cheese tart: printed as *vegetarian* (label withheld on site)
    - Rusk with cheese & olives: printed as *vegan* (label withheld)
    - Grilled feta with chutney: *vegan* on the Greek menu, *vegetarian* on the English (shown as vegetarian)
    - Stuffed tomatoes & peppers (gemista): *vegetarian* on Greek only (no label shown)
    - Omelet: confirm no meat ingredients are offered
+3a. **Allergens (required by EU Regulation 1169/2011 for food sold to the public).** Fill in `docs/allergen-form.csv`: one row per dish, **Y or N for every one of the 14 allergens**. Leave a row completely blank if not yet known; that dish then shows nothing. Partial rows are rejected on import. Return it and run `python3 tools/allergens.py import docs/allergen-form.csv`. Until then the site states that allergen details are not listed yet and asks guests to tell staff. Nothing has been inferred from dish names.
 4. **Items on one language only**: Patsavouropita (Greek only; English name is our translation); Giannatsi ouzo 45% €12 (English only).
 5. **Wording**: "Freddo/Double" under espresso and cappuccino. We show "Freddo espresso / Double espresso".
 

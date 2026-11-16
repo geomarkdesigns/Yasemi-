@@ -49,6 +49,50 @@ DIETS = {
 }
 
 
+# The 14 allergens of EU Regulation 1169/2011, Annex II (order as in the regulation).
+ALLERGENS = {
+    "gluten":      {"en": "Cereals containing gluten", "el": "Δημητριακά που περιέχουν γλουτένη"},
+    "crustaceans": {"en": "Crustaceans", "el": "Καρκινοειδή"},
+    "eggs":        {"en": "Eggs", "el": "Αυγά"},
+    "fish":        {"en": "Fish", "el": "Ψάρια"},
+    "peanuts":     {"en": "Peanuts", "el": "Αράπικα φιστίκια"},
+    "soy":         {"en": "Soybeans", "el": "Σόγια"},
+    "milk":        {"en": "Milk (incl. lactose)", "el": "Γάλα (και λακτόζη)"},
+    "nuts":        {"en": "Tree nuts", "el": "Καρποί με κέλυφος"},
+    "celery":      {"en": "Celery", "el": "Σέλινο"},
+    "mustard":     {"en": "Mustard", "el": "Μουστάρδα"},
+    "sesame":      {"en": "Sesame seeds", "el": "Σουσάμι"},
+    "sulphites":   {"en": "Sulphur dioxide & sulphites", "el": "Διοξείδιο του θείου & θειώδη"},
+    "lupin":       {"en": "Lupin", "el": "Λούπινο"},
+    "molluscs":    {"en": "Molluscs", "el": "Μαλάκια"},
+}
+
+
+def validate_allergens(value, item_id="item"):
+    """None = not yet confirmed by the kitchen (nothing is shown or implied).
+    A list = the kitchen's confirmed declaration; [] means it contains none of the 14."""
+    if value is None:
+        return None
+    if not isinstance(value, list):
+        raise ValueError(f"{item_id}: allergens must be null or a list")
+    unknown = [a for a in value if a not in ALLERGENS]
+    if unknown:
+        raise ValueError(f"{item_id}: unknown allergen code(s) {unknown}")
+    if len(set(value)) != len(value):
+        raise ValueError(f"{item_id}: duplicate allergen codes")
+    return [a for a in ALLERGENS if a in value]          # canonical order
+
+
+def allergen_text(value, lang):
+    """Human text for a confirmed declaration, or None when unconfirmed."""
+    v = validate_allergens(value)
+    if v is None:
+        return None
+    if not v:
+        return {"en": "Contains none of the 14 major allergens", "el": "Δεν περιέχει κανένα από τα 14 κύρια αλλεργιογόνα"}[lang]
+    return {"en": "Contains: ", "el": "Περιέχει: "}[lang] + ", ".join(ALLERGENS[a][lang] for a in v)
+
+
 def validate_menu(menu):
     """Raise ValueError if the menu data is malformed. Returns item count."""
     seen, count = set(), 0
@@ -76,6 +120,7 @@ def validate_menu(menu):
                     fmt_price(p["price"], "en")
             else:
                 fmt_price(it.get("price"), "en")
+            validate_allergens(it.get("allergens"), iid)
             if it.get("diet") not in (None, "vegetarian", "vegan"):
                 raise ValueError(f"item {iid} has unknown diet {it.get('diet')}")
             count += 1

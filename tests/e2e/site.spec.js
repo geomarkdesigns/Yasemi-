@@ -43,13 +43,31 @@ test.describe("routes & metadata", () => {
     await expect(page.locator("h1")).toContainText("Lost on the steps");
   });
 
-  test("no clock or placeholder prices anywhere", async ({ page }) => {
-    for (const path of ["/", "/menu", "/el/menu", "/visit"]) {
+  test("no clock, placeholder prices or 'indicative' wording anywhere", async ({ page }) => {
+    for (const path of ["/", "/menu", "/el/menu", "/visit", "/el", "/photos"]) {
       await page.goto(path);
       const text = await page.locator("body").innerText();
-      expect(text).not.toContain("--:--");
-      expect(text).not.toContain("€ —");
+      for (const bad of ["--:--", "–:–", "€ —", "— €", "Athens time", "Ώρα Αθήνας", "indicative", "ενδεικτικ", "including VAT"]) expect(text, `${path}: ${bad}`).not.toContain(bad);
+      expect(await page.locator("[data-athens-time]").count()).toBe(0);
     }
+  });
+
+  test("menu shows the allergen notice in both languages and no inferred allergens", async ({ page }) => {
+    await page.goto("/menu");
+    await expect(page.locator(".allergen-box")).toContainText("please tell our staff before you order");
+    await page.locator(".allergen-box summary").click();
+    await expect(page.locator(".allergen-list li")).toHaveCount(14);
+    await expect(page.locator(".mi-allergens")).toHaveCount(0);   // nothing confirmed yet, so nothing shown
+    await page.goto("/el/menu");
+    await expect(page.locator(".allergen-box")).toContainText("ενημερώστε το προσωπικό");
+  });
+
+  test("in-site navigation always revalidates pages (never shows a stale cached copy)", async ({ page }) => {
+    await page.goto("/");
+    const req = page.waitForRequest((r) => r.url().endsWith("/menu") && r.resourceType() === "fetch");
+    await page.locator('.links a[href="/menu"]').first().dispatchEvent("pointerover");
+    const r = await req;
+    expect((await r.allHeaders())["cache-control"] || "").toMatch(/no-cache|max-age=0/);   // both force revalidation
   });
 });
 

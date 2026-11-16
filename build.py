@@ -11,7 +11,7 @@ Café facts and the menu live ONLY in content/*.json.
 Interface copy lives below as (English, Greek) pairs.
 """
 import base64, datetime, hashlib, json, pathlib, sys
-from sitegen.core import (esc, pick, url as _url, abs_url as _abs, fmt_price, DIETS,
+from sitegen.core import (esc, pick, url as _url, abs_url as _abs, fmt_price, DIETS, ALLERGENS, allergen_text,
                           validate_menu, hours_rows, opening_hours_ld, maps_links)
 
 ROOT = pathlib.Path(__file__).parent
@@ -473,9 +473,28 @@ def menu_item(it):
     diet = it.get("diet") or ""
     vopt = " vegan-option" if it.get("veganOption") else ""
     desc = f'<p class="mi-desc">{esc(P(it["desc"]))}</p>' if it.get("desc") else ""
+    at = allergen_text(it.get("allergens"), LANG)          # None = not confirmed by the kitchen: show nothing
+    if at:
+        desc += f'<p class="mi-allergens">{esc(at)}</p>'
     multi = " mi-multi" if "prices" in it else ""
     return (f'<li class="mi{multi}" data-diet="{diet}{vopt}" id="item-{it["id"]}"><div class="mi-row">'
             f'<h3 class="mi-name">{esc(P(it["name"]))}</h3>{diet_badge(it)}<span class="dots" aria-hidden="true"></span>{price_html(it)}</div>{desc}</li>')
+
+def allergen_box():
+    items = [i for s in MENU["sections"] for i in s["items"]]
+    confirmed = sum(1 for i in items if i.get("allergens") is not None)
+    if confirmed == len(items):
+        status = T("Allergens for each dish are listed under its name, as declared by our kitchen.", "Τα αλλεργιογόνα κάθε πιάτου αναγράφονται κάτω από το όνομά του, όπως δηλώθηκαν από την κουζίνα μας.")
+    elif confirmed:
+        status = T("Allergens are listed only under dishes our kitchen has declared. For any other dish, please ask before ordering.", "Τα αλλεργιογόνα αναγράφονται μόνο στα πιάτα που έχει δηλώσει η κουζίνα μας. Για τα υπόλοιπα, ρωτήστε πριν παραγγείλετε.")
+    else:
+        status = T("Allergen details for individual dishes are not listed on this website yet.", "Οι πληροφορίες αλλεργιογόνων ανά πιάτο δεν αναγράφονται ακόμη σε αυτόν τον ιστότοπο.")
+    lst = "".join(f"<li>{ALLERGENS[a][LANG]}</li>" for a in ALLERGENS)
+    return f'''<div class="allergen-box" role="note" aria-labelledby="allergen-h">
+    <h2 id="allergen-h" class="allergen-h">{T("Allergies & intolerances", "Αλλεργίες & δυσανεξίες")}</h2>
+    <p><b>{T("If you have an allergy or intolerance, please tell our staff before you order.", "Αν έχετε αλλεργία ή δυσανεξία, ενημερώστε το προσωπικό πριν παραγγείλετε.")}</b> {status}</p>
+    <details><summary>{T("The 14 allergens we declare (EU Regulation 1169/2011)", "Τα 14 αλλεργιογόνα που δηλώνουμε (Κανονισμός ΕΕ 1169/2011)")}</summary><ul class="allergen-list">{lst}</ul></details>
+  </div>'''
 
 def menu():
     validate_menu(MENU)
@@ -508,6 +527,7 @@ def menu():
     legal = "".join(f"<li>{esc(P(n[k]))}</li>" for k in ("receipt", "alcohol", "complaints"))
     sup = SITE.get("foodSafetySupervisor")
     legal += f'<li>{T("Market supervisor", "Αγορανομικός υπεύθυνος")}: {esc(P(sup))}</li>' if sup else ""
+    legal += f'<li>{T("Menu and prices as published by Yiasemi on", "Μενού και τιμές όπως δημοσιεύονται από το Γιασεμί στο")} <a href="{SITE["menuSource"]["url"]}" target="_blank" rel="noopener">yiasemi.gr</a>.</li>'
 
     def offer(it):
         if "prices" in it:
@@ -525,7 +545,7 @@ def menu():
 <section class="wrap page-head">
   <p class="eyebrow">{T("Menu", "Μενού")}</p>
   <h1>{T("Coffee, pies, desserts<br>&amp; Greek wine.", "Καφές, πίτες, γλυκά<br>&amp; ελληνικό κρασί.")}</h1>
-  <p class="lead">{T("Everything is homemade. Prices in euro, including VAT.", "Όλα είναι σπιτικά. Τιμές σε ευρώ, με ΦΠΑ.")}</p>
+  <p class="lead">{T("Everything is homemade. Prices in euro.", "Όλα είναι σπιτικά. Τιμές σε ευρώ.")}</p>
 </section>
 <div class="wrap">
     <div class="menu-tools" role="search">
@@ -546,6 +566,7 @@ def menu():
   </div>
 </div>
 <section class="wrap menu-wrap" id="menu" aria-label="{T("Menu items", "Είδη μενού")}">
+  {allergen_box()}
   <p class="menu-legend"><span class="diet diet-vegetarian" aria-hidden="true">V</span> {T("Vegetarian", "Χορτοφαγικό")} <span class="diet diet-vegan" aria-hidden="true">VG</span> Vegan</p>
   <p class="menu-empty" id="menu-empty" hidden>{T("Nothing matches your search.", "Δεν βρέθηκε κάτι.")} <button type="button" class="link-btn" data-clear-search>{T("Clear search", "Καθαρισμός")}</button></p>
   <p class="sr-only" aria-live="polite" id="menu-count"></p>
