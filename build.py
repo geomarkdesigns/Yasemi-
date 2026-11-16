@@ -6,7 +6,7 @@ manifest and 404 into ./public.  Run:  python3 build.py
 Edit text below (every string is a pair: English, Greek).
 Photos are described in public/images/photos.json (made by tools/images.py).
 """
-import json, html, pathlib, datetime
+import json, html, pathlib, datetime, hashlib
 
 BASE = "https://yiasemi.vercel.app"          # change to your custom domain later
 PHONE = "+302130417937"
@@ -14,6 +14,8 @@ PHONE_TXT = "+30 213 041 7937"
 OUT = pathlib.Path(__file__).parent / "public"
 PHOTOS = json.loads((OUT / "images/photos.json").read_text(encoding="utf-8")) if (OUT / "images/photos.json").exists() else {}
 TODAY = datetime.date.today().isoformat()
+def ver(rel):   # cache-busting version from file contents
+    return hashlib.sha1((OUT / rel).read_bytes()).hexdigest()[:8]
 LANG = "en"
 
 def T(en, el):
@@ -166,9 +168,9 @@ def head(path, title, desc, ld, og_img=None, noindex=False, og_type="website"):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {hero_preload}<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500&family=GFS+Didot&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v={ver("css/style.css")}">
 <script>try{{var d=document.documentElement,t=localStorage.getItem("theme")||"light";d.setAttribute("data-theme",t)}}catch(e){{}}</script>
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js?v={ver("js/main.js")}" defer></script>
 <script type="application/ld+json">{graph}</script>
 </head>
 <body>
