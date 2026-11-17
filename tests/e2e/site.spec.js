@@ -41,7 +41,6 @@ test.describe("routes & metadata", () => {
   }
 
   test("unknown route returns the 404 page", async ({ page }) => {
-    test.fail(!!process.env.BASE_URL, "Known defect: the interim jsDelivr proxy serves jsDelivr's 404 text, not ours (fixed by Vercel Git integration).");
     const res = await page.goto("/does-not-exist");
     expect(res?.status()).toBe(404);
     await expect(page.locator("h1")).toContainText("Lost on the steps");

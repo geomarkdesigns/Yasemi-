@@ -15,23 +15,23 @@
   },
   {
    "source": "/",
-   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@ca40d0a7706a745e92a7e9c6405a8d54c52b1976/public/index.html"
+   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@617e45e0d448378517c2483917aaf3a632774fd5/public/index.html"
   },
   {
    "source": "/el",
-   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@ca40d0a7706a745e92a7e9c6405a8d54c52b1976/public/el/index.html"
+   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@617e45e0d448378517c2483917aaf3a632774fd5/public/el/index.html"
   },
   {
    "source": "/:page(menu|photos|visit|credits|privacy)",
-   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@ca40d0a7706a745e92a7e9c6405a8d54c52b1976/public/:page.html"
+   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@617e45e0d448378517c2483917aaf3a632774fd5/public/:page.html"
   },
   {
    "source": "/el/:page(menu|photos|visit|credits|privacy)",
-   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@ca40d0a7706a745e92a7e9c6405a8d54c52b1976/public/el/:page.html"
+   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@617e45e0d448378517c2483917aaf3a632774fd5/public/el/:page.html"
   },
   {
    "source": "/:path((?!__access$|__logout$).*)",
-   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@ca40d0a7706a745e92a7e9c6405a8d54c52b1976/public/:path"
+   "destination": "https://cdn.jsdelivr.net/gh/geomarkdesigns/Yasemi-@617e45e0d448378517c2483917aaf3a632774fd5/public/:path"
   }
  ],
  "headers": [
