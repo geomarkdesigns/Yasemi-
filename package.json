@@ -6,7 +6,7 @@
     "build": "python3 build.py",
     "images": "python3 tools/images.py",
     "serve": "python3 tools/serve.py 8765",
-    "test:unit": "python3 -m unittest discover -s tests/unit -v",
+    "test:unit": "python3 -m unittest discover -s tests/unit -v && node tests/unit/middleware_routes.test.js",
     "test:e2e": "playwright test --trace off",
     "test": "npm run build && npm run test:unit && npm run test:e2e"
   },

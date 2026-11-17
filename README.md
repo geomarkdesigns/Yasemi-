@@ -25,8 +25,11 @@ npm run serve             # local preview at http://127.0.0.1:8765
 ```
 
 ## Docs
-- `docs/AUDIT.md`: audit, defect list, test results, Lighthouse, security
-- `docs/CLIENT-REQUIREMENTS.md`: information still needed from the café
+- `docs/CLIENT-VERIFICATION.md`: **outstanding information and approvals needed from the café** (start here)
+- `docs/DEPLOYMENT.md`: how the site is hosted, how to release, go-live and the move to a Git-connected deployment
+- `docs/AUDIT.md`: audit history, defects, test results, security
+- `docs/menu-approval.csv`, `docs/allergen-form.csv`: sign-off sheets for the owner
+- `content/photos/README.md`: how to add the café's own photos
 
 ## Editing the menu
 Edit `content/menu.json`: each item has `name.en`/`name.el`, optional `desc`, `price` (number, e.g. `6.5`) or `prices` (sizes), and `diet` (`"vegetarian"`, `"vegan"` or `null`). Only add a dietary label the kitchen has confirmed. Run `python3 build.py && npm test`, then push.
@@ -34,5 +37,5 @@ Edit `content/menu.json`: each item has `name.en`/`name.el`, optional `desc`, `p
 ## Pre-launch access gate
 Until the café approves going live, every URL (pages, images, sitemap, robots.txt) answers **401** with a code form, plus `X-Robots-Tag: noindex`.
 - `deploy/middleware.js`: the gate (Vercel Routing Middleware, runs before anything is served). The code is **not** in the repo. It is the `ACCESS_CODE` environment variable (type *sensitive*) on the Vercel project. Change the code by changing that variable and redeploying.
-- After entering the code, a secure HttpOnly cookie keeps you signed in for 30 days. `/__logout` signs out.
-- **To go live:** deploy without `middleware.js` and remove the `X-Robots-Tag` header (see `deploy/vercel.proxy.json`).
+- Sessions do **not** persist: the cookie lasts only for the browser session, the site signs you out when you close the tab or leave the site, and every session expires after **12 hours** at most. `/__logout` signs out.
+- **To go live:** see `docs/DEPLOYMENT.md` (`python3 deploy/make_proxy.py --live` switches the gate off and allows indexing).

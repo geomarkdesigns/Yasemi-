@@ -51,6 +51,11 @@ def crop(im, aspect, focal):
     nh = round(W / target); y = round((H - nh) * fy)  # too tall -> trim top/bottom
     return im.crop((0, y, W, y + nh))
 
+# Fixed page slots: whatever photo is used (licensed or the café's own), it is cropped to the
+# shape its frame expects, so swapping in an owner photo cannot break the layout.
+SLOT_ASPECT = {"hero": "3:4", "about": "4:5", "sig-coffee": "3:4", "sig-sweet": "3:4", "sig-pie": "3:4", "evening-1": "4:5"}
+
+
 def main():
     CACHE.mkdir(parents=True, exist_ok=True); OUT.mkdir(parents=True, exist_ok=True)
     manifest = {}
@@ -67,7 +72,7 @@ def main():
             if not src.exists():
                 print("downloading", c["title"]); fetch(c["title"], src); time.sleep(3)
         im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
-        im = crop(im, c.get("aspect"), c.get("focal"))
+        im = crop(im, SLOT_ASPECT.get(c["id"], c.get("aspect")), c.get("focal"))
         widths = sorted({w for w in WIDTHS if w < im.width} | {min(im.width, WIDTHS[-1])})
         for w in widths:
             h = round(im.height * w / im.width)
@@ -75,7 +80,11 @@ def main():
             r.save(OUT / f'{c["base"]}-{w}.webp', "WEBP", quality=72, method=6)
             r.save(OUT / f'{c["base"]}-{w}.jpg', "JPEG", quality=82, optimize=True, progressive=True)
         big = widths[-1]
-        manifest[c["id"]] = {"base": c["base"], "widths": widths, "w": big, "h": round(im.height * big / im.width),
+        if c.get("origin") == "yiasemi" and c.get("caption"):
+            extra = {"caption": c["caption"]}
+        else:
+            extra = {}
+        manifest[c["id"]] = {**extra, "base": c["base"], "widths": widths, "w": big, "h": round(im.height * big / im.width),
                              "alt": c["alt"], "cat": c.get("cat"), "author": c["author"], "license": c["license"],
                              "licurl": c.get("licurl", ""), "source": c.get("source", ""), "title": c.get("title", ""),
                              "origin": c.get("origin", "licensed")}

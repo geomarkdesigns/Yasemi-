@@ -111,6 +111,11 @@
       document.querySelector(".dock")?.classList.toggle("show", scrollY > 420);
     });
   }, { passive: true });
+  // Close the mobile menu when tapping/clicking anywhere outside it.
+  document.addEventListener("click", (e) => {
+    const links = document.querySelector(".links.open");
+    if (links && !e.target.closest(".links, .menu-toggle")) closeNav(false);
+  });
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
     const links = document.querySelector(".links.open");

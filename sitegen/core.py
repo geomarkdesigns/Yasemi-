@@ -105,6 +105,9 @@ def validate_menu(menu):
         for lang in LANGS:
             if not pick(sec["name"], lang):
                 raise ValueError(f"section {sec['id']} missing {lang} name")
+        for f in ("served", "footnote"):
+            if sec.get(f) is not None and not (sec[f].get("en") and sec[f].get("el")):
+                raise ValueError(f"section {sec['id']} {f} must have both en and el")
         for it in sec["items"]:
             iid = it.get("id")
             if not iid or iid in seen:
@@ -113,7 +116,12 @@ def validate_menu(menu):
             for lang in LANGS:
                 if not (isinstance(it.get("name"), dict) and it["name"].get(lang)):
                     raise ValueError(f"item {iid} missing {lang} name")
+            if it.get("desc") is not None and not (isinstance(it["desc"], dict) and it["desc"].get("en") and it["desc"].get("el")):
+                raise ValueError(f"item {iid} description must have both en and el")
             if "prices" in it:
+                for pr in it["prices"]:
+                    if not (pr.get("label", {}).get("en") and pr.get("label", {}).get("el")):
+                        raise ValueError(f"item {iid} price label must have both en and el")
                 if not it["prices"]:
                     raise ValueError(f"item {iid} has empty prices")
                 for p in it["prices"]:

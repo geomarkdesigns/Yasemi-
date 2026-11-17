@@ -1,8 +1,12 @@
-// Pre-launch access gate (Vercel Routing Middleware, Edge runtime).
-// Runs on Vercel's servers BEFORE any page, image or file is served.
-// The code itself is NOT in this file: it is the ACCESS_CODE environment
-// variable (type "sensitive") on the Vercel project.
-// To go live: remove this file from the deployment (and the X-Robots-Tag header).
+// Vercel Routing Middleware (Edge runtime). Runs on Vercel's servers BEFORE anything is served.
+//  1. Pre-launch access gate (when GATE is "on"). The code is NOT in this file: it is the
+//     ACCESS_CODE environment variable (type "sensitive") on the Vercel project.
+//     Sessions: browser-session cookie + sign-out when the visitor leaves + 12-hour hard limit.
+//  2. Real 404s: unknown URLs get the site's own 404 page with HTTP status 404.
+// deploy/make_proxy.py fills in the two placeholders below; use --live to switch the gate off.
+
+const GATE = "__GATE__";                 // "on" | "off" (set at deploy time; fails closed)
+const NOT_FOUND_URL = "__NOT_FOUND_URL__";
 
 const COOKIE = "yiasemi_access";      // HttpOnly session cookie: "<issued-ms>.<sha256>"
 const FLAG = "yiasemi_gated";          // readable flag so the page knows to sign out when the visitor leaves
@@ -77,11 +81,36 @@ ${error ? '<p id="err" class="err" role="alert">Λάθος κωδικός. <span
   });
 }
 
+// Every address the site really has. Anything else is a 404.
+const PAGE_RE = /^(?:\/el)?(?:\/(?:menu|photos|visit|credits|privacy))?$/;
+const FILE_RE = /^\/(?:images|fonts|css|js)\/[\w.\-]+$|^\/(?:sitemap\.xml|robots\.txt|manifest\.webmanifest|favicon\.ico)$/;
+const isKnown = (p) => p === "/" || PAGE_RE.test(p.replace(/\/+$/, "")) || FILE_RE.test(p);
+
+// With a Git-connected deployment Vercel serves public/404.html itself: NOT_FOUND_URL is left empty
+// and unknown paths are simply passed through.
+const NATIVE_404 = !NOT_FOUND_URL || NOT_FOUND_URL.startsWith("__");
+
+async function notFound() {
+  if (NATIVE_404) return pass();
+  let body = "<!doctype html><title>404</title><p>Page not found · Η σελίδα δεν βρέθηκε. <a href=\"/\">Yiasemi</a></p>";
+  try {
+    const r = await fetch(NOT_FOUND_URL);
+    if (r.ok) body = await r.text();
+  } catch (e) { /* fall back to the minimal page */ }
+  return new Response(body, { status: 404, headers: {
+    "content-type": "text/html; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex",
+    "x-content-type-options": "nosniff", "referrer-policy": "strict-origin-when-cross-origin", "x-frame-options": "SAMEORIGIN",
+    "content-security-policy": "default-src 'self'; script-src 'self' '__THEME_HASH__'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'",
+  } });
+}
+const pass = () => new Response(null, { headers: { "x-middleware-next": "1" } });   // continue to the site
+
 export default async function middleware(request) {
-  const code = process.env.ACCESS_CODE;
-  if (!code) return new Response("Site temporarily unavailable.", { status: 503, headers: { "cache-control": "no-store" } });
-  const secret = await sha256("yiasemi-gate-v2:" + code);   // changing ACCESS_CODE invalidates every session
   const url = new URL(request.url);
+  if (GATE === "off") return isKnown(url.pathname) ? pass() : notFound();
+  const code = process.env.ACCESS_CODE;
+  if (!code) return new Response("Site temporarily unavailable.", { status: 503, headers: { "cache-control": "no-store" } });   // fail closed
+  const secret = await sha256("yiasemi-gate-v2:" + code);   // changing ACCESS_CODE invalidates every session
 
   if (url.pathname === "/__logout") {
     const h = new Headers({ "cache-control": "no-store" });
@@ -107,7 +136,7 @@ export default async function middleware(request) {
   }
 
   if (await validToken(secret, cookieValue(request))) {
-    return new Response(null, { headers: { "x-middleware-next": "1" } });   // continue to the site
+    return isKnown(url.pathname) ? pass() : notFound();
   }
   return gatePage(url.pathname + url.search, false, 401);
 }

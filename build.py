@@ -97,6 +97,18 @@ def credit(pid):
         return f'{T("Photo", "Φωτογραφία")}: © Yiasemi'
     return f'{T("Photo", "Φωτογραφία")}: {esc(p["author"])} · {esc(p["license"])}'
 
+def slot_cap(pid, generic_en, generic_el):
+    """Caption for a fixed page slot. Authentic photos say so; generic photos keep a neutral
+    description and are NEVER labelled as taken at Yiasemi. Both always carry their credit."""
+    p = PHOTOS.get(pid)
+    if not p:
+        return None
+    if p.get("origin") == "yiasemi":
+        text = esc(P(p["caption"])) if p.get("caption") else T("At Yiasemi", "Στο Γιασεμί")
+    else:
+        text = T(generic_en, generic_el)
+    return f'{text}<small>{credit(pid)}</small>'
+
 def img_abs(pid, w=None):
     p = PHOTOS.get(pid)
     if not p: return BASE + "/images/og.jpg"
@@ -353,7 +365,7 @@ def home():
             ("sig-sweet", "c-olive", ("Homemade desserts", "Σπιτικά γλυκά"), ("Lemon pie & orange pie", "Λεμονόπιτα & πορτοκαλόπιτα"), ("Two of the homemade desserts guests come back for.", "Δύο από τα σπιτικά γλυκά για τα οποία επιστρέφουν οι επισκέπτες."), "desserts"),
             ("sig-pie", "c-sea", ("Made in our kitchen", "Από την κουζίνα μας"), ("Homemade pies", "Σπιτικές πίτες"), ("Spinach pie, and cheese pie with yellow cheeses and kataifi.", "Σπανακόπιτα και τυρόπιτα με κίτρινα τυριά και καταΐφι."), "pies")]
     sigs_html = "".join(
-        f'<li class="sig reveal"><a class="sig-link" href="{url("menu")}#{anchor}">{pic(pid, "arch", col, "(max-width: 760px) 92vw, 360px", cap=T("Illustrative photo", "Ενδεικτική φωτογραφία"))}'
+        f'<li class="sig reveal"><a class="sig-link" href="{url("menu")}#{anchor}">{pic(pid, "arch", col, "(max-width: 760px) 92vw, 360px", cap=slot_cap(pid, "Illustrative photo", "Ενδεικτική φωτογραφία"))}'
         f'<span class="tag">{T(*tag)}</span><h3>{T(*h)}</h3><p>{T(*p)}</p></a></li>' for pid, col, tag, h, p, anchor in sigs)
 
     def cup(gr, say, en, el, n):
@@ -392,7 +404,7 @@ def home():
       </ul>
     </div>
     <div class="hero-photo">
-      {pic("hero", "arch", "c-olive", "(max-width: 960px) 92vw, 440px", eager=True, cap=T("Mnisikleous Street, Plaka", "Οδός Μνησικλέους, Πλάκα"))}
+      {pic("hero", "arch", "c-olive", "(max-width: 960px) 92vw, 440px", eager=True, cap=slot_cap("hero", "Mnisikleous Street, Plaka", "Οδός Μνησικλέους, Πλάκα"))}
       <div class="badge" aria-hidden="true">{jasmine("core")}</div>
     </div>
   </div>
@@ -401,7 +413,7 @@ def home():
 
 <section class="wrap section" aria-labelledby="about-h">
   <div class="about">
-    {pic("about", "reveal", "c-clay", "(max-width: 960px) 92vw, 500px", cap=T("A lane in Plaka", "Στενό στην Πλάκα"))}
+    {pic("about", "reveal", "c-clay", "(max-width: 960px) 92vw, 500px", cap=slot_cap("about", "A lane in Plaka", "Στενό στην Πλάκα"))}
     <div class="reveal">
       <p class="eyebrow">{T("Our place", "Ο χώρος μας")}</p>
       <h2 id="about-h">{T("Named after jasmine.", "Πήρε το όνομά του από το γιασεμί.")}</h2>
